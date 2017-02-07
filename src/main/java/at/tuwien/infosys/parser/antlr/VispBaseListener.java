@@ -1,4 +1,4 @@
-// Generated from /projects/dsg_practical/code/VISP-Runtime-dev/src/main/java/at/tuwien/infosys/topology/antlr/Visp.g4 by ANTLR 4.5.3
+// Generated from /projects/dsg_practical/code/VISP-TopologyManager/src/main/java/at/tuwien/infosys/parser/antlr/Visp.g4 by ANTLR 4.6
 package at.tuwien.infosys.parser.antlr;
 
 import org.antlr.v4.runtime.ParserRuleContext;
@@ -203,6 +203,30 @@ public class VispBaseListener implements VispListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitNodeType(VispParser.NodeTypeContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterSizeStmt(VispParser.SizeStmtContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitSizeStmt(VispParser.SizeStmtContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterSizeType(VispParser.SizeTypeContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitSizeType(VispParser.SizeTypeContext ctx) { }
 
 	/**
 	 * {@inheritDoc}

@@ -1,4 +1,4 @@
-// Generated from /projects/dsg_practical/code/VISP-Runtime-dev/src/main/java/at/tuwien/infosys/topology/antlr/Visp.g4 by ANTLR 4.5.3
+// Generated from /projects/dsg_practical/code/VISP-TopologyManager/src/main/java/at/tuwien/infosys/parser/antlr/Visp.g4 by ANTLR 4.6
 package at.tuwien.infosys.parser.antlr;
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
@@ -167,4 +167,24 @@ public interface VispListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitNodeType(VispParser.NodeTypeContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link VispParser#sizeStmt}.
+	 * @param ctx the parse tree
+	 */
+	void enterSizeStmt(VispParser.SizeStmtContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link VispParser#sizeStmt}.
+	 * @param ctx the parse tree
+	 */
+	void exitSizeStmt(VispParser.SizeStmtContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link VispParser#sizeType}.
+	 * @param ctx the parse tree
+	 */
+	void enterSizeType(VispParser.SizeTypeContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link VispParser#sizeType}.
+	 * @param ctx the parse tree
+	 */
+	void exitSizeType(VispParser.SizeTypeContext ctx);
 }

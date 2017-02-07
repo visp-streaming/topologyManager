@@ -118,12 +118,22 @@ public class TopologyListener extends VispBaseListener {
         allowedLocationsIsSet = true;
         //List<VispParser.IpAddressContext> allIps = ctx.ipAddress();
         System.out.println("Allowed locations: ");
-        for (TerminalNode ipAddress : ctx.IP_ADDRESS()) {
-            System.out.println(ipAddress.getText());
-            newOperator.getAllowedLocationsList().add(ipAddress.getText());
+        for (TerminalNode location : ctx.LOCATION()) {
+            Operator.Location operatorLocation = new Operator.Location(getIpAddress(location.getText()), getResourcePool(location.getText()));
+            newOperator.getAllowedLocationsList().add(operatorLocation);
         }
         newOperator.setAllowedLocations(StringUtils.join(newOperator.getAllowedLocationsList(), ","));
 
+    }
+
+    private String getResourcePool(String text) {
+        String[] splitted = text.split("/");
+        return splitted[1];
+    }
+
+    private String getIpAddress(String text) {
+        String[] splitted = text.split("/");
+        return splitted[0];
     }
 
     @Override
@@ -200,11 +210,30 @@ public class TopologyListener extends VispBaseListener {
     public void enterConcreteLocationStmt(VispParser.ConcreteLocationStmtContext ctx) {
         concreteLocationIsSet = true;
         //List<VispParser.IpAddressContext> allIps = ctx.ipAddress();
-        System.out.println("Concrete concreteLocation: ");
-        System.out.println(ctx.IP_ADDRESS().getText());
-        newOperator.setConcreteLocation(ctx.IP_ADDRESS().getText());
+        //System.out.println("Concrete concreteLocation: ");
+        //System.out.println(ctx.location().getText());
+        // change
+        //newOperator.setConcreteLocation(new Operator.Location(ctx.location().IP_ADDRESS().getText(), ctx.location().resourcePool().getText()));
+        newOperator.setConcreteLocation(new Operator.Location(getIpAddress(ctx.LOCATION().getText()), getResourcePool(ctx.LOCATION().getText())));
+
         // TODO: add check whether concrete concreteLocation is in allowed locations
     }
+
+    @Override
+    public void enterSizeStmt(VispParser.SizeStmtContext ctx) {
+        String sizeString = ctx.sizeType().getText();
+        if(sizeString.equals("small")) {
+            newOperator.setSize(Operator.Size.SMALL);
+        } else if(sizeString.equals("medium")) {
+            newOperator.setSize(Operator.Size.MEDIUM);
+        } else if(sizeString.equals("large")) {
+            newOperator.setSize(Operator.Size.LARGE);
+        } else {
+            throw new RuntimeException("Unknown operator size: " + sizeString);
+        }
+    }
+
+
 
     @Override
     public void exitConfigfile(VispParser.ConfigfileContext ctx) {
@@ -222,8 +251,9 @@ public class TopologyListener extends VispBaseListener {
 
     private void initOperator() {
         newOperator.setSourcesText(new ArrayList<String>());
-        newOperator.setAllowedLocationsList(new ArrayList<String>());
+        newOperator.setAllowedLocationsList(new ArrayList<Operator.Location>());
         newOperator.setInputFormat(new ArrayList<String>());
+        newOperator.setSize(Operator.Size.MEDIUM); // default
     }
 
 

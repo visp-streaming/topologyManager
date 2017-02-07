@@ -6,9 +6,9 @@ nodeHead : newNodeId '=' nodeType '(' ( | sourceNode | sourceNode (',' sourceNod
 newNodeId : ID ;
 sourceNode : ID ;
 nodeBody : | statement | statement (',' statement)* ','?;
-statement : allowedLocationsStmt | inputFormatStmt | sourceStmt | mechanismStmt | typeStmt | outputFormatStmt | statefulStmt | concreteLocationStmt ;
-allowedLocationsStmt : 'allowedLocations' '=' IP_ADDRESS*;
-concreteLocationStmt : 'concreteLocation' '=' IP_ADDRESS;
+statement : allowedLocationsStmt | inputFormatStmt | sourceStmt | mechanismStmt | typeStmt | outputFormatStmt | statefulStmt | concreteLocationStmt | sizeStmt ;
+allowedLocationsStmt : 'allowedLocations' '=' LOCATION*;
+concreteLocationStmt : 'concreteLocation' '=' LOCATION;
 inputFormatStmt : 'inputFormat' '=' STRING ;
 sourceStmt : 'source' '=' STRING ;
 mechanismStmt : 'mechanism' '=' STRING ;
@@ -16,6 +16,10 @@ typeStmt : 'type' '=' STRING ;
 outputFormatStmt : 'outputFormat' '=' STRING ;
 statefulStmt : 'stateful' '=' BOOLEAN ;
 nodeType : SOURCE | OPERATOR | SINK ;
+sizeStmt : 'size' '=' sizeType ;
+sizeType : ('small' | 'medium' | 'large') ;
+LOCATION : IP_ADDRESS SLASH RESOURCEPOOL ;
+SLASH : '/' ;
 BOOLEAN : 'true' | 'false' ;
 IP_ADDRESS : OCTET '.' OCTET '.' OCTET '.' OCTET ;
 OCTET
@@ -29,6 +33,9 @@ OPERATOR : 'Operator' ;
 SINK : 'Sink' ;
 STRING      :   '"' ('\\"'|.)*? '"' | (LETTER | [0-9])+;
 ID  :   '$' LETTER (LETTER | [0-9])* ;
+RESOURCEPOOL : QUOTELESSSTRING ;
+QUOTELESSSTRING : (LETTER | [0-9]) + ;
+
 
 fragment
 LETTER : [a-zA-Z] ;

@@ -1,9 +1,10 @@
 package at.tuwien.infosys.parser;
 
 import at.tuwien.infosys.parser.operatorUpdates.ChangeToBeExecuted;
+import entities.operators.Operator;
 
 public class TopologyUpdate {
-    private String affectedHost; // which host is affected by this update
+    private Operator.Location affectedHost; // which host is affected by this update
 
 
     public enum Action {REMOVE_OPERATOR, ADD_OPERATOR, UPDATE_OPERATOR};
@@ -27,14 +28,14 @@ public class TopologyUpdate {
 
     private String affectedOperatorId;
 
-    public TopologyUpdate(String affectedHost, Action action, String affectedOperatorId) {
+    public TopologyUpdate(Operator.Location affectedHost, Action action, String affectedOperatorId) {
         this.affectedHost = affectedHost;
         this.action = action;
         this.affectedOperatorId = affectedOperatorId;
         this.updateType = null;
     }
 
-    public TopologyUpdate(String affectedHost, Action action, UpdateType updateType, String affectedOperatorId) {
+    public TopologyUpdate(Operator.Location affectedHost, Action action, UpdateType updateType, String affectedOperatorId) {
         if(!action.equals(Action.UPDATE_OPERATOR)) {
             throw new RuntimeException("Invalid constructor used for action " + action.toString());
         }
@@ -72,11 +73,11 @@ public class TopologyUpdate {
     public void setUpdateType(UpdateType updateType) {
         this.updateType = updateType;
     }
-    public String getAffectedHost() {
+    public Operator.Location getAffectedHost() {
         return affectedHost;
     }
 
-    public void setAffectedHost(String affectedHost) {
+    public void setAffectedHost(Operator.Location affectedHost) {
         this.affectedHost = affectedHost;
     }
 

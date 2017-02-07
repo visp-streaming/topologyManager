@@ -89,9 +89,7 @@ public class NewTopologyParser {
 //        Resource resource = new ClassPathResource("topologyConfiguration/sequence_v2.conf");
         InputStream is;
         if(loadFromClassPath) {
-            //Resource resource = new ClassPathResource(inputFile);
-            //is = new FileInputStream(resource.getFile());
-            throw new RuntimeException("implement reading of file from classpath resource without spring");
+            is = this.getClass().getResourceAsStream("/" + inputFile);
         } else {
             is = new FileInputStream(inputFile);
         }
@@ -131,7 +129,7 @@ public class NewTopologyParser {
                 String operatorName = entry.getKey();
                 Operator operator = entry.getValue();
                 bw.write("$" + operatorName + " = " + getOperatorSubclass(operator) + "(" + getOperatorSourcesFormatted(operator) + ") {\n");
-                bw.write("  allowedLocations = " + String.join(" ", operator.getAllowedLocationsList()) + ",\n");
+                bw.write("  allowedLocations = " + allowedLocationsToList(operator.getAllowedLocationsList()) + ",\n");
                 bw.write("  concreteLocation = " + operator.getConcreteLocation() + ",\n");
                 bw.write("  inputFormat = " + String.join(" ", operator.getInputFormat()) + ",\n");
                 bw.write("  type = " + operator.getType() + ",\n");
@@ -147,6 +145,17 @@ public class NewTopologyParser {
         }catch(IOException e){
             throw new RuntimeException("Could not write topology to temporary file", e);
         }
+    }
+
+    private String allowedLocationsToList(List<Operator.Location> allowedLocationsList) {
+        String returnString = "";
+        for(Operator.Location loc : allowedLocationsList) {
+            returnString += loc.getIpAddress() + "/" + loc.getResourcePool() + " ";
+        }
+
+        returnString = returnString.trim();
+
+        return returnString;
     }
 
     private String getOperatorSourcesFormatted(Operator operator) {

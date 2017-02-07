@@ -58,9 +58,16 @@ public class ParserTest {
     }
 
     @Test
+    public void test_correctSize() {
+        Assert.assertEquals(Operator.Size.LARGE, topology.get("step4").getSize());
+        Assert.assertEquals(Operator.Size.SMALL, topology.get("step3").getSize());
+        Assert.assertEquals(Operator.Size.MEDIUM, topology.get("log").getSize());
+    }
+
+    @Test
     public void test_correctInputFormat() {
         for(String location : topology.get("source").getInputFormat()) {
-            System.out.println(location);
+            logger.info(location);
             if(location.equals("sourceData")) {
                 assertTrue(true);
                 return;
@@ -71,9 +78,19 @@ public class ParserTest {
 
     @Test
     public void test_allowedLocations() {
-        for(String location : topology.get("source").getAllowedLocationsList()) {
-            System.out.println(location);
-            if(location.equals("192.168.0.1")) {
+        for(Operator.Location location : topology.get("source").getAllowedLocationsList()) {
+            if(location.getIpAddress().equals("192.168.0.1")) {
+                assertTrue(true);
+                return;
+            }
+        }
+        assertTrue(false);
+    }
+
+    @Test
+    public void test_allowedLocationsResourcePool() {
+        for(Operator.Location location : topology.get("source").getAllowedLocationsList()) {
+            if(location.getResourcePool().equals("openstackpool")) {
                 assertTrue(true);
                 return;
             }
@@ -89,6 +106,7 @@ public class ParserTest {
         Assert.assertNotNull(topology.get("step3").getConcreteLocation());
         Assert.assertNotNull(topology.get("step4").getConcreteLocation());
         Assert.assertNotNull(topology.get("step5").getConcreteLocation());
+
     }
 
     @Test
