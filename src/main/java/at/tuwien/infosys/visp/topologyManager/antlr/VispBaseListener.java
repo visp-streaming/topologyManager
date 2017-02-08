@@ -1,5 +1,5 @@
 // Generated from /projects/dsg_practical/code/VISP-TopologyManager/src/main/java/at/tuwien/infosys/parser/antlr/Visp.g4 by ANTLR 4.6
-package at.tuwien.infosys.parser.antlr;
+package at.tuwien.infosys.visp.topologyManager.antlr;
 
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ErrorNode;

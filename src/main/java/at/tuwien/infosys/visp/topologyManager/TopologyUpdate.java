@@ -1,7 +1,7 @@
-package at.tuwien.infosys.parser;
+package at.tuwien.infosys.visp.topologyManager;
 
-import at.tuwien.infosys.parser.operatorUpdates.ChangeToBeExecuted;
-import entities.operators.Operator;
+import ac.at.tuwien.infosys.visp.common.operators.Operator;
+import at.tuwien.infosys.visp.topologyManager.operatorUpdates.ChangeToBeExecuted;
 
 public class TopologyUpdate {
     private Operator.Location affectedHost; // which host is affected by this update

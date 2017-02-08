@@ -1,16 +1,18 @@
-package at.tuwien.infosys.parser;
+package at.tuwien.infosys.visp.topologyManager;
 
-import at.tuwien.infosys.parser.antlr.VispLexer;
-import at.tuwien.infosys.parser.antlr.VispParser;
-import at.tuwien.infosys.parser.antlr.listener.TopologyListener;
-import entities.operators.*;
+import ac.at.tuwien.infosys.visp.common.operators.Operator;
+import ac.at.tuwien.infosys.visp.common.operators.ProcessingOperator;
+import ac.at.tuwien.infosys.visp.common.operators.Sink;
+import ac.at.tuwien.infosys.visp.common.operators.Source;
+import at.tuwien.infosys.visp.topologyManager.antlr.VispLexer;
+import at.tuwien.infosys.visp.topologyManager.antlr.VispParser;
+import at.tuwien.infosys.visp.topologyManager.antlr.listener.TopologyListener;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 
 import java.io.*;
 import java.util.LinkedHashMap;

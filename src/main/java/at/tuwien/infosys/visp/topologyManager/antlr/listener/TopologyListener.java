@@ -1,11 +1,11 @@
-package at.tuwien.infosys.parser.antlr.listener;
+package at.tuwien.infosys.visp.topologyManager.antlr.listener;
 
-import entities.operators.Operator;
-import entities.operators.ProcessingOperator;
-import entities.operators.Sink;
-import entities.operators.Source;
-import at.tuwien.infosys.parser.antlr.VispBaseListener;
-import at.tuwien.infosys.parser.antlr.VispParser;
+import ac.at.tuwien.infosys.visp.common.operators.Operator;
+import ac.at.tuwien.infosys.visp.common.operators.ProcessingOperator;
+import ac.at.tuwien.infosys.visp.common.operators.Sink;
+import ac.at.tuwien.infosys.visp.common.operators.Source;
+import at.tuwien.infosys.visp.topologyManager.antlr.VispBaseListener;
+import at.tuwien.infosys.visp.topologyManager.antlr.VispParser;
 import org.antlr.v4.runtime.tree.TerminalNode;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -14,9 +14,6 @@ import org.slf4j.LoggerFactory;
 import java.io.*;
 import java.util.*;
 
-/**
- * Created by bernhard on 10.11.16.
- */
 public class TopologyListener extends VispBaseListener {
     VispParser parser;
     List<String> linesToWriteToGraphViz;

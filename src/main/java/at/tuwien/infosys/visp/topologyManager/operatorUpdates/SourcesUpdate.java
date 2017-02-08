@@ -1,6 +1,6 @@
-package at.tuwien.infosys.parser.operatorUpdates;
+package at.tuwien.infosys.visp.topologyManager.operatorUpdates;
 
-import entities.operators.Operator;
+import ac.at.tuwien.infosys.visp.common.operators.Operator;
 
 import java.util.List;
 

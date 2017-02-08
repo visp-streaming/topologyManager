@@ -1,6 +1,6 @@
 package at.tuwien.infosys;
 
-import at.tuwien.infosys.parser.NewTopologyParser;
+import at.tuwien.infosys.visp.topologyManager.NewTopologyParser;
 import entities.operators.Operator;
 import entities.operators.ProcessingOperator;
 import entities.operators.Sink;

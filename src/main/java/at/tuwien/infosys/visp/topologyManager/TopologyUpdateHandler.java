@@ -1,8 +1,8 @@
-package at.tuwien.infosys.parser;
+package at.tuwien.infosys.visp.topologyManager;
 
 
-import entities.operators.Operator;
-import at.tuwien.infosys.parser.operatorUpdates.SourcesUpdate;
+import ac.at.tuwien.infosys.visp.common.operators.Operator;
+import at.tuwien.infosys.visp.topologyManager.operatorUpdates.SourcesUpdate;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -12,9 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Created by bernhard on 04.01.17.
- */
 
 public class TopologyUpdateHandler {
     /**
