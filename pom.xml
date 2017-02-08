@@ -50,4 +50,15 @@
         </plugins>
     </build>
 
+    <repositories>
+        <repository>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <id>bintray-chochreiner-VISP</id>
+            <name>bintray</name>
+            <url>http://dl.bintray.com/chochreiner/VISP</url>
+        </repository>
+    </repositories>
+
 </project>
