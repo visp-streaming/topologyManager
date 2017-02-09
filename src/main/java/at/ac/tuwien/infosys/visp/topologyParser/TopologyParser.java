@@ -1,12 +1,12 @@
-package at.ac.tuwien.infosys.visp.topologyManager;
+package at.ac.tuwien.infosys.visp.topologyParser;
 
-import ac.at.tuwien.infosys.visp.common.operators.Operator;
-import ac.at.tuwien.infosys.visp.common.operators.ProcessingOperator;
-import ac.at.tuwien.infosys.visp.common.operators.Sink;
-import ac.at.tuwien.infosys.visp.common.operators.Source;
-import at.ac.tuwien.infosys.visp.topologyManager.antlr.VispLexer;
-import at.ac.tuwien.infosys.visp.topologyManager.antlr.VispParser;
-import at.ac.tuwien.infosys.visp.topologyManager.antlr.listener.TopologyListener;
+import at.ac.tuwien.infosys.visp.common.operators.Operator;
+import at.ac.tuwien.infosys.visp.common.operators.ProcessingOperator;
+import at.ac.tuwien.infosys.visp.common.operators.Sink;
+import at.ac.tuwien.infosys.visp.common.operators.Source;
+import at.ac.tuwien.infosys.visp.topologyParser.antlr.VispLexer;
+import at.ac.tuwien.infosys.visp.topologyParser.antlr.VispParser;
+import at.ac.tuwien.infosys.visp.topologyParser.antlr.listener.TopologyListener;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
@@ -19,7 +19,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-public class NewTopologyParser {
+public class TopologyParser {
 
     private final boolean DEBUG = false;
 
@@ -27,7 +27,7 @@ public class NewTopologyParser {
 
     public static final String GRAPHVIZ_OUT = "/tmp/output.dot";
 
-    private static final Logger logger = Logger.getLogger(NewTopologyParser.class);
+    private static final Logger logger = Logger.getLogger(TopologyParser.class);
 
     public Map<String, Operator> getTopology() {
         return topology;

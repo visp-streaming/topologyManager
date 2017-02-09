@@ -1,19 +1,15 @@
-package at.tuwien.infosys;
+package at.ac.tuwien.infosys.visp.topologyParser;
 
-import at.ac.tuwien.infosys.visp.topologyManager.NewTopologyParser;
-import ac.at.tuwien.infosys.visp.common.operators.Operator;
-import ac.at.tuwien.infosys.visp.common.operators.ProcessingOperator;
-import ac.at.tuwien.infosys.visp.common.operators.Sink;
-import ac.at.tuwien.infosys.visp.common.operators.Source;
+import at.ac.tuwien.infosys.visp.common.operators.Operator;
+import at.ac.tuwien.infosys.visp.common.operators.ProcessingOperator;
+import at.ac.tuwien.infosys.visp.common.operators.Sink;
+import at.ac.tuwien.infosys.visp.common.operators.Source;
 import org.apache.log4j.Logger;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.util.Map;
-
-import static org.junit.Assert.assertTrue;
-
 
 public class ParserTest {
 
@@ -23,9 +19,8 @@ public class ParserTest {
 
     @BeforeClass
     public static void setUp() {
-        NewTopologyParser parser = new NewTopologyParser();
+        TopologyParser parser = new TopologyParser();
 
-        // TODO: load topology from class path
         parser.loadTopologyFromClasspath("sequence_v2.conf");
         logger.debug("This topology has been generated:");
 

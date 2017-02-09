@@ -1,11 +1,11 @@
-package at.ac.tuwien.infosys.visp.topologyManager.antlr.listener;
+package at.ac.tuwien.infosys.visp.topologyParser.antlr.listener;
 
-import ac.at.tuwien.infosys.visp.common.operators.Operator;
-import ac.at.tuwien.infosys.visp.common.operators.ProcessingOperator;
-import ac.at.tuwien.infosys.visp.common.operators.Sink;
-import ac.at.tuwien.infosys.visp.common.operators.Source;
-import at.ac.tuwien.infosys.visp.topologyManager.antlr.VispBaseListener;
-import at.ac.tuwien.infosys.visp.topologyManager.antlr.VispParser;
+import at.ac.tuwien.infosys.visp.common.operators.Operator;
+import at.ac.tuwien.infosys.visp.common.operators.ProcessingOperator;
+import at.ac.tuwien.infosys.visp.common.operators.Sink;
+import at.ac.tuwien.infosys.visp.common.operators.Source;
+import at.ac.tuwien.infosys.visp.topologyParser.antlr.VispBaseListener;
+import at.ac.tuwien.infosys.visp.topologyParser.antlr.VispParser;
 import org.antlr.v4.runtime.tree.TerminalNode;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
@@ -111,6 +111,11 @@ public class TopologyListener extends VispBaseListener {
 
         if (!concreteLocationIsSet) {
             // concrete location was not explicitly set
+
+            if(newOperator instanceof Source || newOperator instanceof Sink) {
+                throw new RuntimeException("No concreteLocation set for source/sink " + currentNodeName);
+            }
+
             // pick one randomly from allowed ones
 
             newOperator.setConcreteLocation(newOperator.getAllowedLocationsList().get(

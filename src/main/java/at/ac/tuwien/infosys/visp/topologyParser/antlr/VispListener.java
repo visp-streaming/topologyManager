@@ -1,5 +1,4 @@
-// Generated from /projects/dsg_practical/code/VISP-TopologyManager/src/main/java/at/tuwien/infosys/visp/topologyManager/antlr/Visp.g4 by ANTLR 4.6
-package at.ac.tuwien.infosys.visp.topologyManager.antlr;
+package at.ac.tuwien.infosys.visp.topologyParser.antlr;
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
 /**
