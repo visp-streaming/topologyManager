@@ -1,9 +1,9 @@
-package at.ac.tuwien.infosys.visp.topologyParser;
+package ac.at.tuwien.infosys.visp.topologyParser;
 
-import at.ac.tuwien.infosys.visp.common.operators.Operator;
-import at.ac.tuwien.infosys.visp.common.operators.ProcessingOperator;
-import at.ac.tuwien.infosys.visp.common.operators.Sink;
-import at.ac.tuwien.infosys.visp.common.operators.Source;
+import ac.at.tuwien.infosys.visp.common.operators.Operator;
+import ac.at.tuwien.infosys.visp.common.operators.ProcessingOperator;
+import ac.at.tuwien.infosys.visp.common.operators.Sink;
+import ac.at.tuwien.infosys.visp.common.operators.Source;
 import org.apache.log4j.Logger;
 import org.junit.Assert;
 import org.junit.BeforeClass;

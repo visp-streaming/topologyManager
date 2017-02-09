@@ -1,12 +1,12 @@
-package at.ac.tuwien.infosys.visp.topologyParser;
+package ac.at.tuwien.infosys.visp.topologyParser;
 
-import at.ac.tuwien.infosys.visp.common.operators.Operator;
-import at.ac.tuwien.infosys.visp.common.operators.ProcessingOperator;
-import at.ac.tuwien.infosys.visp.common.operators.Sink;
-import at.ac.tuwien.infosys.visp.common.operators.Source;
-import at.ac.tuwien.infosys.visp.topologyParser.antlr.VispLexer;
-import at.ac.tuwien.infosys.visp.topologyParser.antlr.VispParser;
-import at.ac.tuwien.infosys.visp.topologyParser.antlr.listener.TopologyListener;
+import ac.at.tuwien.infosys.visp.common.operators.Operator;
+import ac.at.tuwien.infosys.visp.common.operators.ProcessingOperator;
+import ac.at.tuwien.infosys.visp.common.operators.Sink;
+import ac.at.tuwien.infosys.visp.common.operators.Source;
+import ac.at.tuwien.infosys.visp.topologyParser.antlr.VispLexer;
+import ac.at.tuwien.infosys.visp.topologyParser.antlr.VispParser;
+import ac.at.tuwien.infosys.visp.topologyParser.antlr.listener.TopologyListener;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;

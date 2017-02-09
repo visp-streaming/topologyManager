@@ -1,4 +1,4 @@
-package at.ac.tuwien.infosys.visp.topologyParser.antlr;
+package ac.at.tuwien.infosys.visp.topologyParser.antlr;
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
 import org.antlr.v4.runtime.*;
