@@ -1,18 +1,18 @@
-package at.tuwien.infosys.visp.topologyManager;
+package at.ac.tuwien.infosys.visp.topologyManager;
 
 import ac.at.tuwien.infosys.visp.common.operators.Operator;
 import ac.at.tuwien.infosys.visp.common.operators.ProcessingOperator;
 import ac.at.tuwien.infosys.visp.common.operators.Sink;
 import ac.at.tuwien.infosys.visp.common.operators.Source;
-import at.tuwien.infosys.visp.topologyManager.antlr.VispLexer;
-import at.tuwien.infosys.visp.topologyManager.antlr.VispParser;
-import at.tuwien.infosys.visp.topologyManager.antlr.listener.TopologyListener;
+import at.ac.tuwien.infosys.visp.topologyManager.antlr.VispLexer;
+import at.ac.tuwien.infosys.visp.topologyManager.antlr.VispParser;
+import at.ac.tuwien.infosys.visp.topologyManager.antlr.listener.TopologyListener;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
+
 
 import java.io.*;
 import java.util.LinkedHashMap;
@@ -21,14 +21,13 @@ import java.util.Map;
 
 public class NewTopologyParser {
 
-    //@Value("${visp.infrastructurehost}")
-    //private String infrastructureHost;
+    private final boolean DEBUG = false;
 
     private Map<String, Operator> topology = new LinkedHashMap<>();
 
     public static final String GRAPHVIZ_OUT = "/tmp/output.dot";
 
-    private static final Logger LOG = LoggerFactory.getLogger(NewTopologyParser.class);
+    private static final Logger logger = Logger.getLogger(NewTopologyParser.class);
 
     public Map<String, Operator> getTopology() {
         return topology;
@@ -36,59 +35,30 @@ public class NewTopologyParser {
 
 
     public void loadTopologyFromClasspath(String file) {
-        System.out.println("Starting loadTopologyFromClasspath for file " + file);
+        logger.debug("Starting loadTopologyFromClasspath for file " + file);
 
         try {
             parse(file, true);
         } catch (IOException e) {
-            LOG.error(e.getMessage());
-            throw new RuntimeException("Unable to parse topology file");
+            logger.error(e.getMessage());
+            throw new RuntimeException("Unable to parse topology file", e);
         }
-
-//        enrichTopology();
-
     }
 
     public void loadTopologyFromFileSystem(String file) {
-        System.out.println("Starting loadTopologyFromClasspath for file " + file);
-
         try {
             parse(file, false);
         } catch (IOException e) {
-            LOG.error(e.getMessage());
-            throw new RuntimeException("Unable to parse topology file");
+            logger.error(e.getMessage());
+            throw new RuntimeException("Unable to parse topology file", e);
         }
-
-//        enrichTopology();
-
     }
 
-//    private void enrichTopology() {
-//        /**
-//         * (My guess): transforms the sources string into an actual list of
-//         * operators that is then set for each operator.
-//         */
-//
-//        for (Operator operator : topology.values()) {
-//            List<Operator> realOperators = new ArrayList<>();
-//
-//            for (String op : operator.getSourcesText()) {
-//                realOperators.add(topology.get(op));
-//            }
-//
-//            operator.setSources(realOperators);
-//            operator.setMessageBrokerHost(infrastructureHost); // TODO get rid of this during deployment. Momentan läuft nur 1 rabbitmq instance; ersetze durch IP im topology file
-//            topology.put(operator.getName(), operator);
-//        }
-//
-//    }
 
 
     private void parse(String inputFile, boolean loadFromClassPath) throws IOException {
+        logger.info("Starting antlr parse process for input file: " + inputFile);
 
-        LOG.info("Starting antlr parse process for input file: " + inputFile);
-
-//        Resource resource = new ClassPathResource("topologyConfiguration/sequence_v2.conf");
         InputStream is;
         if(loadFromClassPath) {
             is = this.getClass().getResourceAsStream("/" + inputFile);
@@ -109,15 +79,16 @@ public class NewTopologyParser {
         walker.walk(topologyListener, tree);
 
 
-        topologyListener.writeGraphvizFile(GRAPHVIZ_OUT);
+        if(DEBUG) {
+            logger.debug("Writing debug graphviz-file to " + GRAPHVIZ_OUT);
+            topologyListener.writeGraphvizFile(GRAPHVIZ_OUT);
+        }
 
-//        System.out.println("Wrote graphviz file to: " + GRAPHVIZ_OUT);
-//
-//        System.out.println("This topology has been generated:");
-//
-//        for(Operator o : topologyListener.getTopology().values()) {
-//            System.out.println(o);
-//        }
+
+        logger.debug("The following topology was created after parsing:");
+        for(Operator o : topologyListener.getTopology().values()) {
+            logger.debug(o.toString());
+        }
 
         topology = topologyListener.getTopology();
 
@@ -133,9 +104,9 @@ public class NewTopologyParser {
                 bw.write("$" + operatorName + " = " + getOperatorSubclass(operator) + "(" + getOperatorSourcesFormatted(operator) + ") {\n");
                 bw.write("  allowedLocations = " + allowedLocationsToList(operator.getAllowedLocationsList()) + ",\n");
                 bw.write("  concreteLocation = " + operator.getConcreteLocation() + ",\n");
-                bw.write("  inputFormat = " + String.join(" ", operator.getInputFormat()) + ",\n");
-                bw.write("  type = " + operator.getType() + ",\n");
-                bw.write("  outputFormat = " + operator.getOutputFormat() + ",\n");
+                bw.write("  inputFormat = \"" + String.join(" ", operator.getInputFormat()) + "\",\n");
+                bw.write("  type = \"" + operator.getType() + "\",\n");
+                bw.write("  outputFormat = \"" + operator.getOutputFormat() + "\",\n");
                 bw.write("  stateful = " + (operator.isStateful() ? "true" : "false") + ",\n");
                 bw.write("}\n\n");
             }
@@ -185,21 +156,5 @@ public class NewTopologyParser {
     private List<String> getSources(String start) {
         throw new RuntimeException("Not yet implemented");
     }
-
-//    private List<String> getSources(String start) {
-//        List<String> sources = new ArrayList<>();
-//
-//        String sourcesText = start.substring(start.indexOf("(") + 1, start.indexOf(")"));
-//        if (sourcesText.contains(",")) {
-//
-//            for (String source : sourcesText.split(",")) {
-//                source = source.trim();
-//                sources.add(source.substring(1));
-//            }
-//        } else {
-//            sources.add(sourcesText.substring(1));
-//        }
-//        return sources;
-//    }
 
 }

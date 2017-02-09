@@ -1,5 +1,5 @@
-// Generated from /projects/dsg_practical/code/VISP-TopologyManager/src/main/java/at/tuwien/infosys/parser/antlr/Visp.g4 by ANTLR 4.6
-package at.tuwien.infosys.visp.topologyManager.antlr;
+// Generated from /projects/dsg_practical/code/VISP-TopologyManager/src/main/java/at/tuwien/infosys/visp/topologyManager/antlr/Visp.g4 by ANTLR 4.6
+package at.ac.tuwien.infosys.visp.topologyManager.antlr;
 
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ErrorNode;
@@ -136,18 +136,6 @@ public class VispBaseListener implements VispListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterSourceStmt(VispParser.SourceStmtContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitSourceStmt(VispParser.SourceStmtContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterMechanismStmt(VispParser.MechanismStmtContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -227,6 +215,78 @@ public class VispBaseListener implements VispListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitSizeType(VispParser.SizeTypeContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterExpectedDurationStmt(VispParser.ExpectedDurationStmtContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitExpectedDurationStmt(VispParser.ExpectedDurationStmtContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterScalingCPUThresholdStmt(VispParser.ScalingCPUThresholdStmtContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitScalingCPUThresholdStmt(VispParser.ScalingCPUThresholdStmtContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterScalingMemoryThresholdStmt(VispParser.ScalingMemoryThresholdStmtContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitScalingMemoryThresholdStmt(VispParser.ScalingMemoryThresholdStmtContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterQueueThreshold(VispParser.QueueThresholdContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitQueueThreshold(VispParser.QueueThresholdContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterReplicationAllowedStmt(VispParser.ReplicationAllowedStmtContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitReplicationAllowedStmt(VispParser.ReplicationAllowedStmtContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterPinnedStmt(VispParser.PinnedStmtContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitPinnedStmt(VispParser.PinnedStmtContext ctx) { }
 
 	/**
 	 * {@inheritDoc}

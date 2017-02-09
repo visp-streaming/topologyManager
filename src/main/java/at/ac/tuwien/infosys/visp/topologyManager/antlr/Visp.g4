@@ -6,11 +6,12 @@ nodeHead : newNodeId '=' nodeType '(' ( | sourceNode | sourceNode (',' sourceNod
 newNodeId : ID ;
 sourceNode : ID ;
 nodeBody : | statement | statement (',' statement)* ','?;
-statement : allowedLocationsStmt | inputFormatStmt | sourceStmt | mechanismStmt | typeStmt | outputFormatStmt | statefulStmt | concreteLocationStmt | sizeStmt ;
+statement : allowedLocationsStmt | inputFormatStmt | mechanismStmt | typeStmt | outputFormatStmt |
+  statefulStmt | concreteLocationStmt | sizeStmt | expectedDurationStmt | scalingCPUThresholdStmt |
+  scalingMemoryThresholdStmt | queueThreshold | replicationAllowedStmt | pinnedStmt;
 allowedLocationsStmt : 'allowedLocations' '=' LOCATION*;
 concreteLocationStmt : 'concreteLocation' '=' LOCATION;
-inputFormatStmt : 'inputFormat' '=' STRING ;
-sourceStmt : 'source' '=' STRING ;
+inputFormatStmt : 'inputFormat' '=' STRING+ ;
 mechanismStmt : 'mechanism' '=' STRING ;
 typeStmt : 'type' '=' STRING ;
 outputFormatStmt : 'outputFormat' '=' STRING ;
@@ -18,6 +19,13 @@ statefulStmt : 'stateful' '=' BOOLEAN ;
 nodeType : SOURCE | OPERATOR | SINK ;
 sizeStmt : 'size' '=' sizeType ;
 sizeType : ('small' | 'medium' | 'large') ;
+expectedDurationStmt : 'expectedDuration' '=' NUMBER ;
+scalingCPUThresholdStmt : 'scalingCPUThreshold' '=' NUMBER ;
+scalingMemoryThresholdStmt : 'scalingMemoryThreshold' '=' NUMBER ;
+queueThreshold : 'queueThreshold' '=' NUMBER ;
+replicationAllowedStmt : 'replicationAllowed' '=' BOOLEAN ;
+pinnedStmt : 'pinned' '=' BOOLEAN ;
+NUMBER : DOUBLE | INT ;
 LOCATION : IP_ADDRESS SLASH RESOURCEPOOL ;
 SLASH : '/' ;
 BOOLEAN : 'true' | 'false' ;
@@ -33,13 +41,13 @@ OPERATOR : 'Operator' ;
 SINK : 'Sink' ;
 STRING      :   '"' ('\\"'|.)*? '"' | (LETTER | [0-9])+;
 ID  :   '$' LETTER (LETTER | [0-9])* ;
-RESOURCEPOOL : QUOTELESSSTRING ;
-QUOTELESSSTRING : (LETTER | [0-9]) + ;
+RESOURCEPOOL : STRING ;
+//QUOTELESSSTRING : (LETTER | [0-9]) + ;
 
 
 fragment
 LETTER : [a-zA-Z] ;
 INT :   [0-9]+ ;
-
+fragment DOUBLE :   '0'..'9'+'.''0'..'9'+ ;
 PREPROC     :   '#' .*? '\n' -> skip ;
 WS          :   [ \t\n\r]+ -> skip ;

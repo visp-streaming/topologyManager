@@ -1,5 +1,5 @@
-// Generated from /projects/dsg_practical/code/VISP-TopologyManager/src/main/java/at/tuwien/infosys/parser/antlr/Visp.g4 by ANTLR 4.6
-package at.tuwien.infosys.visp.topologyManager.antlr;
+// Generated from /projects/dsg_practical/code/VISP-TopologyManager/src/main/java/at/tuwien/infosys/visp/topologyManager/antlr/Visp.g4 by ANTLR 4.6
+package at.ac.tuwien.infosys.visp.topologyManager.antlr;
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
 import org.antlr.v4.runtime.*;
@@ -16,33 +16,41 @@ public class VispParser extends Parser {
 	public static final int
 		T__0=1, T__1=2, T__2=3, T__3=4, T__4=5, T__5=6, T__6=7, T__7=8, T__8=9, 
 		T__9=10, T__10=11, T__11=12, T__12=13, T__13=14, T__14=15, T__15=16, T__16=17, 
-		T__17=18, LOCATION=19, SLASH=20, BOOLEAN=21, IP_ADDRESS=22, OCTET=23, 
-		DIGIT=24, SOURCE=25, OPERATOR=26, SINK=27, STRING=28, ID=29, RESOURCEPOOL=30, 
-		QUOTELESSSTRING=31, INT=32, PREPROC=33, WS=34;
+		T__17=18, T__18=19, T__19=20, T__20=21, T__21=22, T__22=23, NUMBER=24, 
+		LOCATION=25, SLASH=26, BOOLEAN=27, IP_ADDRESS=28, OCTET=29, DIGIT=30, 
+		SOURCE=31, OPERATOR=32, SINK=33, STRING=34, ID=35, RESOURCEPOOL=36, INT=37, 
+		PREPROC=38, WS=39;
 	public static final int
 		RULE_configfile = 0, RULE_nodeBlock = 1, RULE_nodeHead = 2, RULE_newNodeId = 3, 
 		RULE_sourceNode = 4, RULE_nodeBody = 5, RULE_statement = 6, RULE_allowedLocationsStmt = 7, 
-		RULE_concreteLocationStmt = 8, RULE_inputFormatStmt = 9, RULE_sourceStmt = 10, 
-		RULE_mechanismStmt = 11, RULE_typeStmt = 12, RULE_outputFormatStmt = 13, 
-		RULE_statefulStmt = 14, RULE_nodeType = 15, RULE_sizeStmt = 16, RULE_sizeType = 17;
+		RULE_concreteLocationStmt = 8, RULE_inputFormatStmt = 9, RULE_mechanismStmt = 10, 
+		RULE_typeStmt = 11, RULE_outputFormatStmt = 12, RULE_statefulStmt = 13, 
+		RULE_nodeType = 14, RULE_sizeStmt = 15, RULE_sizeType = 16, RULE_expectedDurationStmt = 17, 
+		RULE_scalingCPUThresholdStmt = 18, RULE_scalingMemoryThresholdStmt = 19, 
+		RULE_queueThreshold = 20, RULE_replicationAllowedStmt = 21, RULE_pinnedStmt = 22;
 	public static final String[] ruleNames = {
 		"configfile", "nodeBlock", "nodeHead", "newNodeId", "sourceNode", "nodeBody", 
 		"statement", "allowedLocationsStmt", "concreteLocationStmt", "inputFormatStmt", 
-		"sourceStmt", "mechanismStmt", "typeStmt", "outputFormatStmt", "statefulStmt", 
-		"nodeType", "sizeStmt", "sizeType"
+		"mechanismStmt", "typeStmt", "outputFormatStmt", "statefulStmt", "nodeType", 
+		"sizeStmt", "sizeType", "expectedDurationStmt", "scalingCPUThresholdStmt", 
+		"scalingMemoryThresholdStmt", "queueThreshold", "replicationAllowedStmt", 
+		"pinnedStmt"
 	};
 
 	private static final String[] _LITERAL_NAMES = {
 		null, "'{'", "'}'", "'='", "'('", "','", "')'", "'allowedLocations'", 
-		"'concreteLocation'", "'inputFormat'", "'source'", "'mechanism'", "'type'", 
-		"'outputFormat'", "'stateful'", "'size'", "'small'", "'medium'", "'large'", 
-		null, "'/'", null, null, null, null, "'Source'", "'Operator'", "'Sink'"
+		"'concreteLocation'", "'inputFormat'", "'mechanism'", "'type'", "'outputFormat'", 
+		"'stateful'", "'size'", "'small'", "'medium'", "'large'", "'expectedDuration'", 
+		"'scalingCPUThreshold'", "'scalingMemoryThreshold'", "'queueThreshold'", 
+		"'replicationAllowed'", "'pinned'", null, null, "'/'", null, null, null, 
+		null, "'Source'", "'Operator'", "'Sink'"
 	};
 	private static final String[] _SYMBOLIC_NAMES = {
 		null, null, null, null, null, null, null, null, null, null, null, null, 
-		null, null, null, null, null, null, null, "LOCATION", "SLASH", "BOOLEAN", 
-		"IP_ADDRESS", "OCTET", "DIGIT", "SOURCE", "OPERATOR", "SINK", "STRING", 
-		"ID", "RESOURCEPOOL", "QUOTELESSSTRING", "INT", "PREPROC", "WS"
+		null, null, null, null, null, null, null, null, null, null, null, null, 
+		"NUMBER", "LOCATION", "SLASH", "BOOLEAN", "IP_ADDRESS", "OCTET", "DIGIT", 
+		"SOURCE", "OPERATOR", "SINK", "STRING", "ID", "RESOURCEPOOL", "INT", "PREPROC", 
+		"WS"
 	};
 	public static final Vocabulary VOCABULARY = new VocabularyImpl(_LITERAL_NAMES, _SYMBOLIC_NAMES);
 
@@ -121,17 +129,17 @@ public class VispParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(37); 
+			setState(47); 
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			do {
 				{
 				{
-				setState(36);
+				setState(46);
 				nodeBlock();
 				}
 				}
-				setState(39); 
+				setState(49); 
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			} while ( _la==ID );
@@ -175,13 +183,13 @@ public class VispParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(41);
+			setState(51);
 			nodeHead();
-			setState(42);
+			setState(52);
 			match(T__0);
-			setState(43);
+			setState(53);
 			nodeBody();
-			setState(44);
+			setState(54);
 			match(T__1);
 			}
 		}
@@ -230,15 +238,15 @@ public class VispParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(46);
+			setState(56);
 			newNodeId();
-			setState(47);
+			setState(57);
 			match(T__2);
-			setState(48);
+			setState(58);
 			nodeType();
-			setState(49);
+			setState(59);
 			match(T__3);
-			setState(60);
+			setState(70);
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,2,_ctx) ) {
 			case 1:
@@ -247,34 +255,34 @@ public class VispParser extends Parser {
 				break;
 			case 2:
 				{
-				setState(51);
+				setState(61);
 				sourceNode();
 				}
 				break;
 			case 3:
 				{
-				setState(52);
+				setState(62);
 				sourceNode();
-				setState(57);
+				setState(67);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 				while (_la==T__4) {
 					{
 					{
-					setState(53);
+					setState(63);
 					match(T__4);
-					setState(54);
+					setState(64);
 					sourceNode();
 					}
 					}
-					setState(59);
+					setState(69);
 					_errHandler.sync(this);
 					_la = _input.LA(1);
 				}
 				}
 				break;
 			}
-			setState(62);
+			setState(72);
 			match(T__5);
 			}
 		}
@@ -311,7 +319,7 @@ public class VispParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(64);
+			setState(74);
 			match(ID);
 			}
 		}
@@ -348,7 +356,7 @@ public class VispParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(66);
+			setState(76);
 			match(ID);
 			}
 		}
@@ -390,7 +398,7 @@ public class VispParser extends Parser {
 		int _la;
 		try {
 			int _alt;
-			setState(81);
+			setState(91);
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,5,_ctx) ) {
 			case 1:
@@ -401,39 +409,39 @@ public class VispParser extends Parser {
 			case 2:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(69);
+				setState(79);
 				statement();
 				}
 				break;
 			case 3:
 				enterOuterAlt(_localctx, 3);
 				{
-				setState(70);
+				setState(80);
 				statement();
-				setState(75);
+				setState(85);
 				_errHandler.sync(this);
 				_alt = getInterpreter().adaptivePredict(_input,3,_ctx);
 				while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
 					if ( _alt==1 ) {
 						{
 						{
-						setState(71);
+						setState(81);
 						match(T__4);
-						setState(72);
+						setState(82);
 						statement();
 						}
 						} 
 					}
-					setState(77);
+					setState(87);
 					_errHandler.sync(this);
 					_alt = getInterpreter().adaptivePredict(_input,3,_ctx);
 				}
-				setState(79);
+				setState(89);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 				if (_la==T__4) {
 					{
-					setState(78);
+					setState(88);
 					match(T__4);
 					}
 				}
@@ -460,9 +468,6 @@ public class VispParser extends Parser {
 		public InputFormatStmtContext inputFormatStmt() {
 			return getRuleContext(InputFormatStmtContext.class,0);
 		}
-		public SourceStmtContext sourceStmt() {
-			return getRuleContext(SourceStmtContext.class,0);
-		}
 		public MechanismStmtContext mechanismStmt() {
 			return getRuleContext(MechanismStmtContext.class,0);
 		}
@@ -480,6 +485,24 @@ public class VispParser extends Parser {
 		}
 		public SizeStmtContext sizeStmt() {
 			return getRuleContext(SizeStmtContext.class,0);
+		}
+		public ExpectedDurationStmtContext expectedDurationStmt() {
+			return getRuleContext(ExpectedDurationStmtContext.class,0);
+		}
+		public ScalingCPUThresholdStmtContext scalingCPUThresholdStmt() {
+			return getRuleContext(ScalingCPUThresholdStmtContext.class,0);
+		}
+		public ScalingMemoryThresholdStmtContext scalingMemoryThresholdStmt() {
+			return getRuleContext(ScalingMemoryThresholdStmtContext.class,0);
+		}
+		public QueueThresholdContext queueThreshold() {
+			return getRuleContext(QueueThresholdContext.class,0);
+		}
+		public ReplicationAllowedStmtContext replicationAllowedStmt() {
+			return getRuleContext(ReplicationAllowedStmtContext.class,0);
+		}
+		public PinnedStmtContext pinnedStmt() {
+			return getRuleContext(PinnedStmtContext.class,0);
 		}
 		public StatementContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -499,70 +522,105 @@ public class VispParser extends Parser {
 		StatementContext _localctx = new StatementContext(_ctx, getState());
 		enterRule(_localctx, 12, RULE_statement);
 		try {
-			setState(92);
+			setState(107);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case T__6:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(83);
+				setState(93);
 				allowedLocationsStmt();
 				}
 				break;
 			case T__8:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(84);
+				setState(94);
 				inputFormatStmt();
 				}
 				break;
 			case T__9:
 				enterOuterAlt(_localctx, 3);
 				{
-				setState(85);
-				sourceStmt();
+				setState(95);
+				mechanismStmt();
 				}
 				break;
 			case T__10:
 				enterOuterAlt(_localctx, 4);
 				{
-				setState(86);
-				mechanismStmt();
+				setState(96);
+				typeStmt();
 				}
 				break;
 			case T__11:
 				enterOuterAlt(_localctx, 5);
 				{
-				setState(87);
-				typeStmt();
+				setState(97);
+				outputFormatStmt();
 				}
 				break;
 			case T__12:
 				enterOuterAlt(_localctx, 6);
 				{
-				setState(88);
-				outputFormatStmt();
-				}
-				break;
-			case T__13:
-				enterOuterAlt(_localctx, 7);
-				{
-				setState(89);
+				setState(98);
 				statefulStmt();
 				}
 				break;
 			case T__7:
-				enterOuterAlt(_localctx, 8);
+				enterOuterAlt(_localctx, 7);
 				{
-				setState(90);
+				setState(99);
 				concreteLocationStmt();
 				}
 				break;
-			case T__14:
+			case T__13:
+				enterOuterAlt(_localctx, 8);
+				{
+				setState(100);
+				sizeStmt();
+				}
+				break;
+			case T__17:
 				enterOuterAlt(_localctx, 9);
 				{
-				setState(91);
-				sizeStmt();
+				setState(101);
+				expectedDurationStmt();
+				}
+				break;
+			case T__18:
+				enterOuterAlt(_localctx, 10);
+				{
+				setState(102);
+				scalingCPUThresholdStmt();
+				}
+				break;
+			case T__19:
+				enterOuterAlt(_localctx, 11);
+				{
+				setState(103);
+				scalingMemoryThresholdStmt();
+				}
+				break;
+			case T__20:
+				enterOuterAlt(_localctx, 12);
+				{
+				setState(104);
+				queueThreshold();
+				}
+				break;
+			case T__21:
+				enterOuterAlt(_localctx, 13);
+				{
+				setState(105);
+				replicationAllowedStmt();
+				}
+				break;
+			case T__22:
+				enterOuterAlt(_localctx, 14);
+				{
+				setState(106);
+				pinnedStmt();
 				}
 				break;
 			default:
@@ -606,21 +664,21 @@ public class VispParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(94);
+			setState(109);
 			match(T__6);
-			setState(95);
+			setState(110);
 			match(T__2);
-			setState(99);
+			setState(114);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			while (_la==LOCATION) {
 				{
 				{
-				setState(96);
+				setState(111);
 				match(LOCATION);
 				}
 				}
-				setState(101);
+				setState(116);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			}
@@ -659,11 +717,11 @@ public class VispParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(102);
+			setState(117);
 			match(T__7);
-			setState(103);
+			setState(118);
 			match(T__2);
-			setState(104);
+			setState(119);
 			match(LOCATION);
 			}
 		}
@@ -679,7 +737,10 @@ public class VispParser extends Parser {
 	}
 
 	public static class InputFormatStmtContext extends ParserRuleContext {
-		public TerminalNode STRING() { return getToken(VispParser.STRING, 0); }
+		public List<TerminalNode> STRING() { return getTokens(VispParser.STRING); }
+		public TerminalNode STRING(int i) {
+			return getToken(VispParser.STRING, i);
+		}
 		public InputFormatStmtContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -697,56 +758,28 @@ public class VispParser extends Parser {
 	public final InputFormatStmtContext inputFormatStmt() throws RecognitionException {
 		InputFormatStmtContext _localctx = new InputFormatStmtContext(_ctx, getState());
 		enterRule(_localctx, 18, RULE_inputFormatStmt);
+		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(106);
+			setState(121);
 			match(T__8);
-			setState(107);
+			setState(122);
 			match(T__2);
-			setState(108);
-			match(STRING);
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			_errHandler.reportError(this, re);
-			_errHandler.recover(this, re);
-		}
-		finally {
-			exitRule();
-		}
-		return _localctx;
-	}
-
-	public static class SourceStmtContext extends ParserRuleContext {
-		public TerminalNode STRING() { return getToken(VispParser.STRING, 0); }
-		public SourceStmtContext(ParserRuleContext parent, int invokingState) {
-			super(parent, invokingState);
-		}
-		@Override public int getRuleIndex() { return RULE_sourceStmt; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof VispListener ) ((VispListener)listener).enterSourceStmt(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof VispListener ) ((VispListener)listener).exitSourceStmt(this);
-		}
-	}
-
-	public final SourceStmtContext sourceStmt() throws RecognitionException {
-		SourceStmtContext _localctx = new SourceStmtContext(_ctx, getState());
-		enterRule(_localctx, 20, RULE_sourceStmt);
-		try {
-			enterOuterAlt(_localctx, 1);
-			{
-			setState(110);
-			match(T__9);
-			setState(111);
-			match(T__2);
-			setState(112);
-			match(STRING);
+			setState(124); 
+			_errHandler.sync(this);
+			_la = _input.LA(1);
+			do {
+				{
+				{
+				setState(123);
+				match(STRING);
+				}
+				}
+				setState(126); 
+				_errHandler.sync(this);
+				_la = _input.LA(1);
+			} while ( _la==STRING );
 			}
 		}
 		catch (RecognitionException re) {
@@ -778,15 +811,15 @@ public class VispParser extends Parser {
 
 	public final MechanismStmtContext mechanismStmt() throws RecognitionException {
 		MechanismStmtContext _localctx = new MechanismStmtContext(_ctx, getState());
-		enterRule(_localctx, 22, RULE_mechanismStmt);
+		enterRule(_localctx, 20, RULE_mechanismStmt);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(114);
-			match(T__10);
-			setState(115);
+			setState(128);
+			match(T__9);
+			setState(129);
 			match(T__2);
-			setState(116);
+			setState(130);
 			match(STRING);
 			}
 		}
@@ -819,15 +852,15 @@ public class VispParser extends Parser {
 
 	public final TypeStmtContext typeStmt() throws RecognitionException {
 		TypeStmtContext _localctx = new TypeStmtContext(_ctx, getState());
-		enterRule(_localctx, 24, RULE_typeStmt);
+		enterRule(_localctx, 22, RULE_typeStmt);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(118);
-			match(T__11);
-			setState(119);
+			setState(132);
+			match(T__10);
+			setState(133);
 			match(T__2);
-			setState(120);
+			setState(134);
 			match(STRING);
 			}
 		}
@@ -860,15 +893,15 @@ public class VispParser extends Parser {
 
 	public final OutputFormatStmtContext outputFormatStmt() throws RecognitionException {
 		OutputFormatStmtContext _localctx = new OutputFormatStmtContext(_ctx, getState());
-		enterRule(_localctx, 26, RULE_outputFormatStmt);
+		enterRule(_localctx, 24, RULE_outputFormatStmt);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(122);
-			match(T__12);
-			setState(123);
+			setState(136);
+			match(T__11);
+			setState(137);
 			match(T__2);
-			setState(124);
+			setState(138);
 			match(STRING);
 			}
 		}
@@ -901,15 +934,15 @@ public class VispParser extends Parser {
 
 	public final StatefulStmtContext statefulStmt() throws RecognitionException {
 		StatefulStmtContext _localctx = new StatefulStmtContext(_ctx, getState());
-		enterRule(_localctx, 28, RULE_statefulStmt);
+		enterRule(_localctx, 26, RULE_statefulStmt);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(126);
-			match(T__13);
-			setState(127);
+			setState(140);
+			match(T__12);
+			setState(141);
 			match(T__2);
-			setState(128);
+			setState(142);
 			match(BOOLEAN);
 			}
 		}
@@ -944,12 +977,12 @@ public class VispParser extends Parser {
 
 	public final NodeTypeContext nodeType() throws RecognitionException {
 		NodeTypeContext _localctx = new NodeTypeContext(_ctx, getState());
-		enterRule(_localctx, 30, RULE_nodeType);
+		enterRule(_localctx, 28, RULE_nodeType);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(130);
+			setState(144);
 			_la = _input.LA(1);
 			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << SOURCE) | (1L << OPERATOR) | (1L << SINK))) != 0)) ) {
 			_errHandler.recoverInline(this);
@@ -992,15 +1025,15 @@ public class VispParser extends Parser {
 
 	public final SizeStmtContext sizeStmt() throws RecognitionException {
 		SizeStmtContext _localctx = new SizeStmtContext(_ctx, getState());
-		enterRule(_localctx, 32, RULE_sizeStmt);
+		enterRule(_localctx, 30, RULE_sizeStmt);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(132);
-			match(T__14);
-			setState(133);
+			setState(146);
+			match(T__13);
+			setState(147);
 			match(T__2);
-			setState(134);
+			setState(148);
 			sizeType();
 			}
 		}
@@ -1032,14 +1065,14 @@ public class VispParser extends Parser {
 
 	public final SizeTypeContext sizeType() throws RecognitionException {
 		SizeTypeContext _localctx = new SizeTypeContext(_ctx, getState());
-		enterRule(_localctx, 34, RULE_sizeType);
+		enterRule(_localctx, 32, RULE_sizeType);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(136);
+			setState(150);
 			_la = _input.LA(1);
-			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__15) | (1L << T__16) | (1L << T__17))) != 0)) ) {
+			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__14) | (1L << T__15) | (1L << T__16))) != 0)) ) {
 			_errHandler.recoverInline(this);
 			}
 			else {
@@ -1060,42 +1093,302 @@ public class VispParser extends Parser {
 		return _localctx;
 	}
 
+	public static class ExpectedDurationStmtContext extends ParserRuleContext {
+		public TerminalNode NUMBER() { return getToken(VispParser.NUMBER, 0); }
+		public ExpectedDurationStmtContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_expectedDurationStmt; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof VispListener ) ((VispListener)listener).enterExpectedDurationStmt(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof VispListener ) ((VispListener)listener).exitExpectedDurationStmt(this);
+		}
+	}
+
+	public final ExpectedDurationStmtContext expectedDurationStmt() throws RecognitionException {
+		ExpectedDurationStmtContext _localctx = new ExpectedDurationStmtContext(_ctx, getState());
+		enterRule(_localctx, 34, RULE_expectedDurationStmt);
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(152);
+			match(T__17);
+			setState(153);
+			match(T__2);
+			setState(154);
+			match(NUMBER);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class ScalingCPUThresholdStmtContext extends ParserRuleContext {
+		public TerminalNode NUMBER() { return getToken(VispParser.NUMBER, 0); }
+		public ScalingCPUThresholdStmtContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_scalingCPUThresholdStmt; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof VispListener ) ((VispListener)listener).enterScalingCPUThresholdStmt(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof VispListener ) ((VispListener)listener).exitScalingCPUThresholdStmt(this);
+		}
+	}
+
+	public final ScalingCPUThresholdStmtContext scalingCPUThresholdStmt() throws RecognitionException {
+		ScalingCPUThresholdStmtContext _localctx = new ScalingCPUThresholdStmtContext(_ctx, getState());
+		enterRule(_localctx, 36, RULE_scalingCPUThresholdStmt);
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(156);
+			match(T__18);
+			setState(157);
+			match(T__2);
+			setState(158);
+			match(NUMBER);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class ScalingMemoryThresholdStmtContext extends ParserRuleContext {
+		public TerminalNode NUMBER() { return getToken(VispParser.NUMBER, 0); }
+		public ScalingMemoryThresholdStmtContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_scalingMemoryThresholdStmt; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof VispListener ) ((VispListener)listener).enterScalingMemoryThresholdStmt(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof VispListener ) ((VispListener)listener).exitScalingMemoryThresholdStmt(this);
+		}
+	}
+
+	public final ScalingMemoryThresholdStmtContext scalingMemoryThresholdStmt() throws RecognitionException {
+		ScalingMemoryThresholdStmtContext _localctx = new ScalingMemoryThresholdStmtContext(_ctx, getState());
+		enterRule(_localctx, 38, RULE_scalingMemoryThresholdStmt);
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(160);
+			match(T__19);
+			setState(161);
+			match(T__2);
+			setState(162);
+			match(NUMBER);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class QueueThresholdContext extends ParserRuleContext {
+		public TerminalNode NUMBER() { return getToken(VispParser.NUMBER, 0); }
+		public QueueThresholdContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_queueThreshold; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof VispListener ) ((VispListener)listener).enterQueueThreshold(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof VispListener ) ((VispListener)listener).exitQueueThreshold(this);
+		}
+	}
+
+	public final QueueThresholdContext queueThreshold() throws RecognitionException {
+		QueueThresholdContext _localctx = new QueueThresholdContext(_ctx, getState());
+		enterRule(_localctx, 40, RULE_queueThreshold);
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(164);
+			match(T__20);
+			setState(165);
+			match(T__2);
+			setState(166);
+			match(NUMBER);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class ReplicationAllowedStmtContext extends ParserRuleContext {
+		public TerminalNode BOOLEAN() { return getToken(VispParser.BOOLEAN, 0); }
+		public ReplicationAllowedStmtContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_replicationAllowedStmt; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof VispListener ) ((VispListener)listener).enterReplicationAllowedStmt(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof VispListener ) ((VispListener)listener).exitReplicationAllowedStmt(this);
+		}
+	}
+
+	public final ReplicationAllowedStmtContext replicationAllowedStmt() throws RecognitionException {
+		ReplicationAllowedStmtContext _localctx = new ReplicationAllowedStmtContext(_ctx, getState());
+		enterRule(_localctx, 42, RULE_replicationAllowedStmt);
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(168);
+			match(T__21);
+			setState(169);
+			match(T__2);
+			setState(170);
+			match(BOOLEAN);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class PinnedStmtContext extends ParserRuleContext {
+		public TerminalNode BOOLEAN() { return getToken(VispParser.BOOLEAN, 0); }
+		public PinnedStmtContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_pinnedStmt; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof VispListener ) ((VispListener)listener).enterPinnedStmt(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof VispListener ) ((VispListener)listener).exitPinnedStmt(this);
+		}
+	}
+
+	public final PinnedStmtContext pinnedStmt() throws RecognitionException {
+		PinnedStmtContext _localctx = new PinnedStmtContext(_ctx, getState());
+		enterRule(_localctx, 44, RULE_pinnedStmt);
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(172);
+			match(T__22);
+			setState(173);
+			match(T__2);
+			setState(174);
+			match(BOOLEAN);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
 	public static final String _serializedATN =
-		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3$\u008d\4\2\t\2\4"+
+		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3)\u00b3\4\2\t\2\4"+
 		"\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\4\13\t"+
 		"\13\4\f\t\f\4\r\t\r\4\16\t\16\4\17\t\17\4\20\t\20\4\21\t\21\4\22\t\22"+
-		"\4\23\t\23\3\2\6\2(\n\2\r\2\16\2)\3\3\3\3\3\3\3\3\3\3\3\4\3\4\3\4\3\4"+
-		"\3\4\3\4\3\4\3\4\3\4\7\4:\n\4\f\4\16\4=\13\4\5\4?\n\4\3\4\3\4\3\5\3\5"+
-		"\3\6\3\6\3\7\3\7\3\7\3\7\3\7\7\7L\n\7\f\7\16\7O\13\7\3\7\5\7R\n\7\5\7"+
-		"T\n\7\3\b\3\b\3\b\3\b\3\b\3\b\3\b\3\b\3\b\5\b_\n\b\3\t\3\t\3\t\7\td\n"+
-		"\t\f\t\16\tg\13\t\3\n\3\n\3\n\3\n\3\13\3\13\3\13\3\13\3\f\3\f\3\f\3\f"+
-		"\3\r\3\r\3\r\3\r\3\16\3\16\3\16\3\16\3\17\3\17\3\17\3\17\3\20\3\20\3\20"+
-		"\3\20\3\21\3\21\3\22\3\22\3\22\3\22\3\23\3\23\3\23\2\2\24\2\4\6\b\n\f"+
-		"\16\20\22\24\26\30\32\34\36 \"$\2\4\3\2\33\35\3\2\22\24\u008b\2\'\3\2"+
-		"\2\2\4+\3\2\2\2\6\60\3\2\2\2\bB\3\2\2\2\nD\3\2\2\2\fS\3\2\2\2\16^\3\2"+
-		"\2\2\20`\3\2\2\2\22h\3\2\2\2\24l\3\2\2\2\26p\3\2\2\2\30t\3\2\2\2\32x\3"+
-		"\2\2\2\34|\3\2\2\2\36\u0080\3\2\2\2 \u0084\3\2\2\2\"\u0086\3\2\2\2$\u008a"+
-		"\3\2\2\2&(\5\4\3\2\'&\3\2\2\2()\3\2\2\2)\'\3\2\2\2)*\3\2\2\2*\3\3\2\2"+
-		"\2+,\5\6\4\2,-\7\3\2\2-.\5\f\7\2./\7\4\2\2/\5\3\2\2\2\60\61\5\b\5\2\61"+
-		"\62\7\5\2\2\62\63\5 \21\2\63>\7\6\2\2\64?\3\2\2\2\65?\5\n\6\2\66;\5\n"+
-		"\6\2\678\7\7\2\28:\5\n\6\29\67\3\2\2\2:=\3\2\2\2;9\3\2\2\2;<\3\2\2\2<"+
-		"?\3\2\2\2=;\3\2\2\2>\64\3\2\2\2>\65\3\2\2\2>\66\3\2\2\2?@\3\2\2\2@A\7"+
-		"\b\2\2A\7\3\2\2\2BC\7\37\2\2C\t\3\2\2\2DE\7\37\2\2E\13\3\2\2\2FT\3\2\2"+
-		"\2GT\5\16\b\2HM\5\16\b\2IJ\7\7\2\2JL\5\16\b\2KI\3\2\2\2LO\3\2\2\2MK\3"+
-		"\2\2\2MN\3\2\2\2NQ\3\2\2\2OM\3\2\2\2PR\7\7\2\2QP\3\2\2\2QR\3\2\2\2RT\3"+
-		"\2\2\2SF\3\2\2\2SG\3\2\2\2SH\3\2\2\2T\r\3\2\2\2U_\5\20\t\2V_\5\24\13\2"+
-		"W_\5\26\f\2X_\5\30\r\2Y_\5\32\16\2Z_\5\34\17\2[_\5\36\20\2\\_\5\22\n\2"+
-		"]_\5\"\22\2^U\3\2\2\2^V\3\2\2\2^W\3\2\2\2^X\3\2\2\2^Y\3\2\2\2^Z\3\2\2"+
-		"\2^[\3\2\2\2^\\\3\2\2\2^]\3\2\2\2_\17\3\2\2\2`a\7\t\2\2ae\7\5\2\2bd\7"+
-		"\25\2\2cb\3\2\2\2dg\3\2\2\2ec\3\2\2\2ef\3\2\2\2f\21\3\2\2\2ge\3\2\2\2"+
-		"hi\7\n\2\2ij\7\5\2\2jk\7\25\2\2k\23\3\2\2\2lm\7\13\2\2mn\7\5\2\2no\7\36"+
-		"\2\2o\25\3\2\2\2pq\7\f\2\2qr\7\5\2\2rs\7\36\2\2s\27\3\2\2\2tu\7\r\2\2"+
-		"uv\7\5\2\2vw\7\36\2\2w\31\3\2\2\2xy\7\16\2\2yz\7\5\2\2z{\7\36\2\2{\33"+
-		"\3\2\2\2|}\7\17\2\2}~\7\5\2\2~\177\7\36\2\2\177\35\3\2\2\2\u0080\u0081"+
-		"\7\20\2\2\u0081\u0082\7\5\2\2\u0082\u0083\7\27\2\2\u0083\37\3\2\2\2\u0084"+
-		"\u0085\t\2\2\2\u0085!\3\2\2\2\u0086\u0087\7\21\2\2\u0087\u0088\7\5\2\2"+
-		"\u0088\u0089\5$\23\2\u0089#\3\2\2\2\u008a\u008b\t\3\2\2\u008b%\3\2\2\2"+
-		"\n);>MQS^e";
+		"\4\23\t\23\4\24\t\24\4\25\t\25\4\26\t\26\4\27\t\27\4\30\t\30\3\2\6\2\62"+
+		"\n\2\r\2\16\2\63\3\3\3\3\3\3\3\3\3\3\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3"+
+		"\4\7\4D\n\4\f\4\16\4G\13\4\5\4I\n\4\3\4\3\4\3\5\3\5\3\6\3\6\3\7\3\7\3"+
+		"\7\3\7\3\7\7\7V\n\7\f\7\16\7Y\13\7\3\7\5\7\\\n\7\5\7^\n\7\3\b\3\b\3\b"+
+		"\3\b\3\b\3\b\3\b\3\b\3\b\3\b\3\b\3\b\3\b\3\b\5\bn\n\b\3\t\3\t\3\t\7\t"+
+		"s\n\t\f\t\16\tv\13\t\3\n\3\n\3\n\3\n\3\13\3\13\3\13\6\13\177\n\13\r\13"+
+		"\16\13\u0080\3\f\3\f\3\f\3\f\3\r\3\r\3\r\3\r\3\16\3\16\3\16\3\16\3\17"+
+		"\3\17\3\17\3\17\3\20\3\20\3\21\3\21\3\21\3\21\3\22\3\22\3\23\3\23\3\23"+
+		"\3\23\3\24\3\24\3\24\3\24\3\25\3\25\3\25\3\25\3\26\3\26\3\26\3\26\3\27"+
+		"\3\27\3\27\3\27\3\30\3\30\3\30\3\30\3\30\2\2\31\2\4\6\b\n\f\16\20\22\24"+
+		"\26\30\32\34\36 \"$&(*,.\2\4\3\2!#\3\2\21\23\u00b2\2\61\3\2\2\2\4\65\3"+
+		"\2\2\2\6:\3\2\2\2\bL\3\2\2\2\nN\3\2\2\2\f]\3\2\2\2\16m\3\2\2\2\20o\3\2"+
+		"\2\2\22w\3\2\2\2\24{\3\2\2\2\26\u0082\3\2\2\2\30\u0086\3\2\2\2\32\u008a"+
+		"\3\2\2\2\34\u008e\3\2\2\2\36\u0092\3\2\2\2 \u0094\3\2\2\2\"\u0098\3\2"+
+		"\2\2$\u009a\3\2\2\2&\u009e\3\2\2\2(\u00a2\3\2\2\2*\u00a6\3\2\2\2,\u00aa"+
+		"\3\2\2\2.\u00ae\3\2\2\2\60\62\5\4\3\2\61\60\3\2\2\2\62\63\3\2\2\2\63\61"+
+		"\3\2\2\2\63\64\3\2\2\2\64\3\3\2\2\2\65\66\5\6\4\2\66\67\7\3\2\2\678\5"+
+		"\f\7\289\7\4\2\29\5\3\2\2\2:;\5\b\5\2;<\7\5\2\2<=\5\36\20\2=H\7\6\2\2"+
+		">I\3\2\2\2?I\5\n\6\2@E\5\n\6\2AB\7\7\2\2BD\5\n\6\2CA\3\2\2\2DG\3\2\2\2"+
+		"EC\3\2\2\2EF\3\2\2\2FI\3\2\2\2GE\3\2\2\2H>\3\2\2\2H?\3\2\2\2H@\3\2\2\2"+
+		"IJ\3\2\2\2JK\7\b\2\2K\7\3\2\2\2LM\7%\2\2M\t\3\2\2\2NO\7%\2\2O\13\3\2\2"+
+		"\2P^\3\2\2\2Q^\5\16\b\2RW\5\16\b\2ST\7\7\2\2TV\5\16\b\2US\3\2\2\2VY\3"+
+		"\2\2\2WU\3\2\2\2WX\3\2\2\2X[\3\2\2\2YW\3\2\2\2Z\\\7\7\2\2[Z\3\2\2\2[\\"+
+		"\3\2\2\2\\^\3\2\2\2]P\3\2\2\2]Q\3\2\2\2]R\3\2\2\2^\r\3\2\2\2_n\5\20\t"+
+		"\2`n\5\24\13\2an\5\26\f\2bn\5\30\r\2cn\5\32\16\2dn\5\34\17\2en\5\22\n"+
+		"\2fn\5 \21\2gn\5$\23\2hn\5&\24\2in\5(\25\2jn\5*\26\2kn\5,\27\2ln\5.\30"+
+		"\2m_\3\2\2\2m`\3\2\2\2ma\3\2\2\2mb\3\2\2\2mc\3\2\2\2md\3\2\2\2me\3\2\2"+
+		"\2mf\3\2\2\2mg\3\2\2\2mh\3\2\2\2mi\3\2\2\2mj\3\2\2\2mk\3\2\2\2ml\3\2\2"+
+		"\2n\17\3\2\2\2op\7\t\2\2pt\7\5\2\2qs\7\33\2\2rq\3\2\2\2sv\3\2\2\2tr\3"+
+		"\2\2\2tu\3\2\2\2u\21\3\2\2\2vt\3\2\2\2wx\7\n\2\2xy\7\5\2\2yz\7\33\2\2"+
+		"z\23\3\2\2\2{|\7\13\2\2|~\7\5\2\2}\177\7$\2\2~}\3\2\2\2\177\u0080\3\2"+
+		"\2\2\u0080~\3\2\2\2\u0080\u0081\3\2\2\2\u0081\25\3\2\2\2\u0082\u0083\7"+
+		"\f\2\2\u0083\u0084\7\5\2\2\u0084\u0085\7$\2\2\u0085\27\3\2\2\2\u0086\u0087"+
+		"\7\r\2\2\u0087\u0088\7\5\2\2\u0088\u0089\7$\2\2\u0089\31\3\2\2\2\u008a"+
+		"\u008b\7\16\2\2\u008b\u008c\7\5\2\2\u008c\u008d\7$\2\2\u008d\33\3\2\2"+
+		"\2\u008e\u008f\7\17\2\2\u008f\u0090\7\5\2\2\u0090\u0091\7\35\2\2\u0091"+
+		"\35\3\2\2\2\u0092\u0093\t\2\2\2\u0093\37\3\2\2\2\u0094\u0095\7\20\2\2"+
+		"\u0095\u0096\7\5\2\2\u0096\u0097\5\"\22\2\u0097!\3\2\2\2\u0098\u0099\t"+
+		"\3\2\2\u0099#\3\2\2\2\u009a\u009b\7\24\2\2\u009b\u009c\7\5\2\2\u009c\u009d"+
+		"\7\32\2\2\u009d%\3\2\2\2\u009e\u009f\7\25\2\2\u009f\u00a0\7\5\2\2\u00a0"+
+		"\u00a1\7\32\2\2\u00a1\'\3\2\2\2\u00a2\u00a3\7\26\2\2\u00a3\u00a4\7\5\2"+
+		"\2\u00a4\u00a5\7\32\2\2\u00a5)\3\2\2\2\u00a6\u00a7\7\27\2\2\u00a7\u00a8"+
+		"\7\5\2\2\u00a8\u00a9\7\32\2\2\u00a9+\3\2\2\2\u00aa\u00ab\7\30\2\2\u00ab"+
+		"\u00ac\7\5\2\2\u00ac\u00ad\7\35\2\2\u00ad-\3\2\2\2\u00ae\u00af\7\31\2"+
+		"\2\u00af\u00b0\7\5\2\2\u00b0\u00b1\7\35\2\2\u00b1/\3\2\2\2\13\63EHW[]"+
+		"mt\u0080";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

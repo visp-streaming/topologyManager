@@ -1,15 +1,14 @@
 package at.tuwien.infosys;
 
-import at.tuwien.infosys.visp.topologyManager.NewTopologyParser;
-import entities.operators.Operator;
-import entities.operators.ProcessingOperator;
-import entities.operators.Sink;
-import entities.operators.Source;
+import at.ac.tuwien.infosys.visp.topologyManager.NewTopologyParser;
+import ac.at.tuwien.infosys.visp.common.operators.Operator;
+import ac.at.tuwien.infosys.visp.common.operators.ProcessingOperator;
+import ac.at.tuwien.infosys.visp.common.operators.Sink;
+import ac.at.tuwien.infosys.visp.common.operators.Source;
+import org.apache.log4j.Logger;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.Map;
 
@@ -20,21 +19,18 @@ public class ParserTest {
 
     static Map<String, Operator> topology;
 
-    static Logger logger = LoggerFactory.getLogger(ParserTest.class);
+    static Logger logger = Logger.getLogger(ParserTest.class);
 
     @BeforeClass
     public static void setUp() {
         NewTopologyParser parser = new NewTopologyParser();
 
         // TODO: load topology from class path
-        //parser.loadTopologyFromClassPath("topologyConfiguration/sequence_v2.conf");
-        parser.loadTopologyFromFileSystem("/projects/dsg_practical/code/VISP-Runtime-dev/src/main/resources/topologyConfiguration/sequence_v2.conf");
-
-
-        logger.info("This topology has been generated:");
+        parser.loadTopologyFromClasspath("sequence_v2.conf");
+        logger.debug("This topology has been generated:");
 
         for(Operator o : parser.getTopology().values()) {
-            logger.info(o.toString());
+            logger.debug(o.toString());
         }
 
         ParserTest.topology = parser.getTopology();
@@ -61,41 +57,40 @@ public class ParserTest {
     public void test_correctSize() {
         Assert.assertEquals(Operator.Size.LARGE, topology.get("step4").getSize());
         Assert.assertEquals(Operator.Size.SMALL, topology.get("step3").getSize());
-        Assert.assertEquals(Operator.Size.MEDIUM, topology.get("log").getSize());
+        Assert.assertEquals(Operator.Size.MEDIUM, topology.get("step5").getSize());
     }
 
     @Test
     public void test_correctInputFormat() {
-        for(String location : topology.get("source").getInputFormat()) {
-            logger.info(location);
-            if(location.equals("sourceData")) {
-                assertTrue(true);
-                return;
-            }
-        }
-        assertTrue(false);
+         Assert.assertTrue(topology.get("step3").getInputFormat().contains("temperature"));
+         Assert.assertTrue(topology.get("step3").getInputFormat().contains("machine1 output data"));
+         Assert.assertTrue(topology.get("step3").getInputFormat().contains("sensor 4 output data"));
     }
 
     @Test
     public void test_allowedLocations() {
-        for(Operator.Location location : topology.get("source").getAllowedLocationsList()) {
-            if(location.getIpAddress().equals("192.168.0.1")) {
-                assertTrue(true);
-                return;
-            }
-        }
-        assertTrue(false);
+        Assert.assertTrue(topology.get("step3").getAllowedLocationsList().contains(new Operator.Location("192.168.0.1", "openstackpool1")));
+        Assert.assertTrue(topology.get("step3").getAllowedLocationsList().contains(new Operator.Location("192.168.0.2", "amazoncloud")));
     }
 
     @Test
-    public void test_allowedLocationsResourcePool() {
-        for(Operator.Location location : topology.get("source").getAllowedLocationsList()) {
-            if(location.getResourcePool().equals("openstackpool")) {
-                assertTrue(true);
-                return;
-            }
-        }
-        assertTrue(false);
+    public void test_expectedDuration() {
+        Assert.assertEquals(15.2, ((ProcessingOperator)topology.get("step2")).getExpectedDuration(), 0.001);
+    }
+
+    @Test
+    public void test_scalingCPUThreshold() {
+        Assert.assertEquals(20.4, ((ProcessingOperator)topology.get("step2")).getScalingCPUThreshold(), 0.001);
+    }
+
+    @Test
+    public void test_scalingMemoryThreshold() {
+        Assert.assertEquals(55.1, ((ProcessingOperator)topology.get("step2")).getScalingMemoryThreshold(), 0.001);
+    }
+
+    @Test
+    public void test_queueThreshold() {
+        Assert.assertEquals(11.0, ((ProcessingOperator)topology.get("step2")).getQueueThreshold(), 0.001);
     }
 
     @Test

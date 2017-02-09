@@ -1,5 +1,5 @@
-// Generated from /projects/dsg_practical/code/VISP-TopologyManager/src/main/java/at/tuwien/infosys/parser/antlr/Visp.g4 by ANTLR 4.6
-package at.tuwien.infosys.visp.topologyManager.antlr;
+// Generated from /projects/dsg_practical/code/VISP-TopologyManager/src/main/java/at/tuwien/infosys/visp/topologyManager/antlr/Visp.g4 by ANTLR 4.6
+package at.ac.tuwien.infosys.visp.topologyManager.antlr;
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
 /**
@@ -108,16 +108,6 @@ public interface VispListener extends ParseTreeListener {
 	 */
 	void exitInputFormatStmt(VispParser.InputFormatStmtContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link VispParser#sourceStmt}.
-	 * @param ctx the parse tree
-	 */
-	void enterSourceStmt(VispParser.SourceStmtContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link VispParser#sourceStmt}.
-	 * @param ctx the parse tree
-	 */
-	void exitSourceStmt(VispParser.SourceStmtContext ctx);
-	/**
 	 * Enter a parse tree produced by {@link VispParser#mechanismStmt}.
 	 * @param ctx the parse tree
 	 */
@@ -187,4 +177,64 @@ public interface VispListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitSizeType(VispParser.SizeTypeContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link VispParser#expectedDurationStmt}.
+	 * @param ctx the parse tree
+	 */
+	void enterExpectedDurationStmt(VispParser.ExpectedDurationStmtContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link VispParser#expectedDurationStmt}.
+	 * @param ctx the parse tree
+	 */
+	void exitExpectedDurationStmt(VispParser.ExpectedDurationStmtContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link VispParser#scalingCPUThresholdStmt}.
+	 * @param ctx the parse tree
+	 */
+	void enterScalingCPUThresholdStmt(VispParser.ScalingCPUThresholdStmtContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link VispParser#scalingCPUThresholdStmt}.
+	 * @param ctx the parse tree
+	 */
+	void exitScalingCPUThresholdStmt(VispParser.ScalingCPUThresholdStmtContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link VispParser#scalingMemoryThresholdStmt}.
+	 * @param ctx the parse tree
+	 */
+	void enterScalingMemoryThresholdStmt(VispParser.ScalingMemoryThresholdStmtContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link VispParser#scalingMemoryThresholdStmt}.
+	 * @param ctx the parse tree
+	 */
+	void exitScalingMemoryThresholdStmt(VispParser.ScalingMemoryThresholdStmtContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link VispParser#queueThreshold}.
+	 * @param ctx the parse tree
+	 */
+	void enterQueueThreshold(VispParser.QueueThresholdContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link VispParser#queueThreshold}.
+	 * @param ctx the parse tree
+	 */
+	void exitQueueThreshold(VispParser.QueueThresholdContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link VispParser#replicationAllowedStmt}.
+	 * @param ctx the parse tree
+	 */
+	void enterReplicationAllowedStmt(VispParser.ReplicationAllowedStmtContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link VispParser#replicationAllowedStmt}.
+	 * @param ctx the parse tree
+	 */
+	void exitReplicationAllowedStmt(VispParser.ReplicationAllowedStmtContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link VispParser#pinnedStmt}.
+	 * @param ctx the parse tree
+	 */
+	void enterPinnedStmt(VispParser.PinnedStmtContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link VispParser#pinnedStmt}.
+	 * @param ctx the parse tree
+	 */
+	void exitPinnedStmt(VispParser.PinnedStmtContext ctx);
 }

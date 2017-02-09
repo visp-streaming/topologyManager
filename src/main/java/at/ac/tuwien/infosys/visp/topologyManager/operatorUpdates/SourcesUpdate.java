@@ -1,4 +1,4 @@
-package at.tuwien.infosys.visp.topologyManager.operatorUpdates;
+package at.ac.tuwien.infosys.visp.topologyManager.operatorUpdates;
 
 import ac.at.tuwien.infosys.visp.common.operators.Operator;
 

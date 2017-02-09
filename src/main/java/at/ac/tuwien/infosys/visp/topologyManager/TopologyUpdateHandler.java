@@ -1,8 +1,8 @@
-package at.tuwien.infosys.visp.topologyManager;
+package at.ac.tuwien.infosys.visp.topologyManager;
 
 
 import ac.at.tuwien.infosys.visp.common.operators.Operator;
-import at.tuwien.infosys.visp.topologyManager.operatorUpdates.SourcesUpdate;
+import at.ac.tuwien.infosys.visp.topologyManager.operatorUpdates.SourcesUpdate;
 
 import java.io.BufferedWriter;
 import java.io.File;
