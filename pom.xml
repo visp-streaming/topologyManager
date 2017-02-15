@@ -52,7 +52,7 @@
 
     <repositories>
         <repository>
-            <id>visp</id>
+            <id>infosys</id>
             <name>infosys-maven-releases</name>
             <url>http://lilith.infosys.tuwien.ac.at:8081/artifactory/libs-release-local</url>
         </repository>
