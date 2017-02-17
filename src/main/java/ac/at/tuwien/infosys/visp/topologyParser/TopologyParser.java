@@ -33,6 +33,9 @@ public class TopologyParser {
         return topology;
     }
 
+    public void setTopology(Map<String, Operator> topology) {
+        this.topology = topology;
+    }
 
     public void loadTopologyFromClasspath(String file) {
         logger.debug("Starting loadTopologyFromClasspath for file " + file);
@@ -55,12 +58,11 @@ public class TopologyParser {
     }
 
 
-
     private void parse(String inputFile, boolean loadFromClassPath) throws IOException {
         logger.info("Starting antlr parse process for input file: " + inputFile);
 
         InputStream is;
-        if(loadFromClassPath) {
+        if (loadFromClassPath) {
             is = this.getClass().getResourceAsStream("/" + inputFile);
         } else {
             is = new FileInputStream(inputFile);
@@ -79,14 +81,14 @@ public class TopologyParser {
         walker.walk(topologyListener, tree);
 
 
-        if(DEBUG) {
+        if (DEBUG) {
             logger.debug("Writing debug graphviz-file to " + GRAPHVIZ_OUT);
             topologyListener.writeGraphvizFile(GRAPHVIZ_OUT);
         }
 
 
         logger.debug("The following topology was created after parsing:");
-        for(Operator o : topologyListener.getTopology().values()) {
+        for (Operator o : topologyListener.getTopology().values()) {
             logger.debug(o.toString());
         }
 
@@ -95,34 +97,46 @@ public class TopologyParser {
     }
 
     public String generateTopologyFile() {
-        try{
+        try {
             File temp = File.createTempFile("topology", ".txt");
             BufferedWriter bw = new BufferedWriter(new FileWriter(temp));
             for (Map.Entry<String, Operator> entry : topology.entrySet()) {
                 String operatorName = entry.getKey();
                 Operator operator = entry.getValue();
                 bw.write("$" + operatorName + " = " + getOperatorSubclass(operator) + "(" + getOperatorSourcesFormatted(operator) + ") {\n");
-                bw.write("  allowedLocations = " + allowedLocationsToList(operator.getAllowedLocationsList()) + ",\n");
+                if (operator instanceof ProcessingOperator) {
+                    bw.write("  allowedLocations = " + allowedLocationsToList(operator.getAllowedLocationsList()) + ",\n");
+                }
                 bw.write("  concreteLocation = " + operator.getConcreteLocation() + ",\n");
-                bw.write("  inputFormat = \"" + String.join(" ", operator.getInputFormat()) + "\",\n");
-                bw.write("  type = \"" + operator.getType() + "\",\n");
-                bw.write("  outputFormat = \"" + operator.getOutputFormat() + "\",\n");
-                bw.write("  stateful = " + (operator.isStateful() ? "true" : "false") + ",\n");
-                bw.write("}\n\n");
+                if (!(operator instanceof Source)) {
+                    bw.write("  inputFormat = \"" + String.join(" ", operator.getInputFormat()) + "\",\n");
+                }
+                if (!(operator instanceof Sink)) {
+                    bw.write("  outputFormat = \"" + operator.getOutputFormat() + "\",\n");
+                }
+                bw.write("  type = \"" + operator.getType() + "\"");
+                if (operator instanceof ProcessingOperator) {
+                    bw.write("  stateful = " + (operator.isStateful() ? "true" : "false") + ",\n");
+                    bw.write(",\n  size = " + operator.getSize().toString().toLowerCase() + ",\n");
+                    bw.write("  expectedDuration = " + ((ProcessingOperator) operator).getExpectedDuration() + ",\n");
+                    bw.write("  scalingCPUThreshold = " + ((ProcessingOperator) operator).getScalingCPUThreshold() + ",\n");
+                    bw.write("  scalingMemoryThreshold = " + ((ProcessingOperator) operator).getScalingMemoryThreshold() + ",\n");
+                    bw.write("  queueThreshold = " + ((ProcessingOperator) operator).getQueueThreshold());
+                }
+                bw.write("\n}\n\n");
             }
-
 
 
             bw.close();
             return temp.getAbsolutePath();
-        }catch(IOException e){
+        } catch (IOException e) {
             throw new RuntimeException("Could not write topology to temporary file", e);
         }
     }
 
     private String allowedLocationsToList(List<Operator.Location> allowedLocationsList) {
         String returnString = "";
-        for(Operator.Location loc : allowedLocationsList) {
+        for (Operator.Location loc : allowedLocationsList) {
             returnString += loc.getIpAddress() + "/" + loc.getResourcePool() + " ";
         }
 
@@ -132,22 +146,22 @@ public class TopologyParser {
     }
 
     private String getOperatorSourcesFormatted(Operator operator) {
-        if(operator.getSources().size() == 0) {
+        if (operator.getSources().size() == 0) {
             return "";
         }
         String returnString = "";
-        for(Operator source : operator.getSources()) {
+        for (Operator source : operator.getSources()) {
             returnString += "$" + source.getName() + ", ";
         }
         return returnString.substring(0, returnString.length() - 2);
     }
 
     private String getOperatorSubclass(Operator operator) {
-        if(operator instanceof Source) {
+        if (operator instanceof Source) {
             return "Source";
-        } else if(operator instanceof Sink) {
+        } else if (operator instanceof Sink) {
             return "Sink";
-        } else if(operator instanceof ProcessingOperator) {
+        } else if (operator instanceof ProcessingOperator) {
             return "Operator";
         } else
             throw new RuntimeException("Unknown operator type for operator " + operator);
