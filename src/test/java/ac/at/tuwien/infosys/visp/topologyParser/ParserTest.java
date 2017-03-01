@@ -21,14 +21,14 @@ public class ParserTest {
     public static void setUp() {
         TopologyParser parser = new TopologyParser();
 
-        parser.loadTopologyFromClasspath("sequence_v2.conf");
+        TopologyParser.ParseResult topology = parser.parseTopologyFromClasspath("sequence_v2.conf");
         logger.debug("This topology has been generated:");
 
-        for(Operator o : parser.getTopology().values()) {
+        for(Operator o : topology.topology.values()) {
             logger.debug(o.toString());
         }
 
-        ParserTest.topology = parser.getTopology();
+        ParserTest.topology = topology.topology;
     }
 
 

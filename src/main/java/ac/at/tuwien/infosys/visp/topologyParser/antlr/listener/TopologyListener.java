@@ -42,6 +42,7 @@ public class TopologyListener extends VispBaseListener {
     }
 
     public void writeGraphvizFile(String filename) throws IOException {
+        logger.info("in writeGraphvizFile for filename " + filename);
         linesToWriteToGraphViz.add("\n}");
 
         try (Writer writer = new BufferedWriter(new OutputStreamWriter(
@@ -50,6 +51,8 @@ public class TopologyListener extends VispBaseListener {
                 writer.write("\t" + s);
             }
         }
+
+        logger.info("Wrote " + linesToWriteToGraphViz + " to " + filename);
 
     }
 
@@ -65,7 +68,6 @@ public class TopologyListener extends VispBaseListener {
         allowedLocationsIsSet = false;
         statefulIsSet = false;
         concreteLocationIsSet = false;
-        //System.out.println("Entering nodeblock: " + ctx.getText());
     }
 
     @Override
@@ -127,6 +129,21 @@ public class TopologyListener extends VispBaseListener {
 
         newOperator.setName(currentNodeName);
         topology.put(currentNodeName, newOperator);
+
+        String color = "";
+        if(newOperator instanceof Source) {
+            color = "beige";
+        } else if(newOperator instanceof ProcessingOperator) {
+            color = "skyblue";
+        } else {
+            color = "springgreen";
+        }
+
+        String toWrite = "\"" + currentNodeName + "\" [style=filled, fontname=\"helvetica\", shape=box, fillcolor=" + color +
+                ", label=<" + currentNodeName + "<BR />\n" +
+                "\t<FONT POINT-SIZE=\"10\">" + newOperator.getConcreteLocation() + "</FONT>>"
+                + "]";
+        this.linesToWriteToGraphViz.add("\t" + toWrite + "\n");
 
     }
 
@@ -218,18 +235,14 @@ public class TopologyListener extends VispBaseListener {
     public void enterNodeType(VispParser.NodeTypeContext ctx) {
 
         logger.debug("Node " + currentNodeName + " has nodeType " + ctx.getText());
-        String color = "";
         switch (ctx.getText()) {
             case "Source":
-                color = "beige";
                 newOperator = new Source();
                 break;
             case "Operator":
-                color = "skyblue";
                 newOperator = new ProcessingOperator();
                 break;
             case "Sink":
-                color = "springgreen";
                 newOperator = new Sink();
                 break;
             default:
@@ -237,12 +250,6 @@ public class TopologyListener extends VispBaseListener {
         }
 
         initOperator();
-
-        String toWrite = "\"" + currentNodeName + "\" [style=filled, shape=box, fillcolor=" + color +
-                ", label=<" + currentNodeName.substring(1) + "<BR />\n" +
-                "\t<FONT POINT-SIZE=\"10\">" + ctx.getText() + "</FONT>>"
-                + "]";
-        this.linesToWriteToGraphViz.add("\t" + toWrite + "\n");
     }
 
     @Override

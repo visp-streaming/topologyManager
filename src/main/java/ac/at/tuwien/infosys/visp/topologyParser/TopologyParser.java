@@ -20,37 +20,30 @@ import java.util.List;
 import java.util.Map;
 
 public class TopologyParser {
+    /**
+     * this class is stateless and can be used to parse and create topology files
+     */
 
     private final boolean DEBUG = false;
 
-    private Map<String, Operator> topology = new LinkedHashMap<>();
-
-    public static final String GRAPHVIZ_OUT = "/tmp/output.dot";
-
     private static final Logger logger = Logger.getLogger(TopologyParser.class);
 
-    public Map<String, Operator> getTopology() {
-        return topology;
-    }
-
-    public void setTopology(Map<String, Operator> topology) {
-        this.topology = topology;
-    }
-
-    public void loadTopologyFromClasspath(String file) {
-        logger.debug("Starting loadTopologyFromClasspath for file " + file);
+    public ParseResult parseTopologyFromClasspath(String file) {
+        logger.info("Starting parseTopologyFromClasspath for file " + file);
 
         try {
-            parse(file, true);
+            return parse(file, true);
         } catch (IOException e) {
             logger.error(e.getMessage());
             throw new RuntimeException("Unable to parse topology file", e);
         }
     }
 
-    public void loadTopologyFromFileSystem(String file) {
+    public ParseResult parseTopologyFromFileSystem(String file) {
+        logger.info("Starting parseTopologyFromFileSystem for file " + file);
+
         try {
-            parse(file, false);
+            return parse(file, false);
         } catch (IOException e) {
             logger.error(e.getMessage());
             throw new RuntimeException("Unable to parse topology file", e);
@@ -58,7 +51,7 @@ public class TopologyParser {
     }
 
 
-    private void parse(String inputFile, boolean loadFromClassPath) throws IOException {
+    private ParseResult parse(String inputFile, boolean loadFromClassPath) throws IOException {
         logger.info("Starting antlr parse process for input file: " + inputFile);
 
         InputStream is;
@@ -76,27 +69,26 @@ public class TopologyParser {
         ParseTreeWalker walker = new ParseTreeWalker();
         TopologyListener topologyListener = new TopologyListener(parser);
 
+        File dotFile = File.createTempFile("graphviz", ".dot");
+
+
+
         // in this method, the generated parse tree is walked
         // here, the actual topology is created
         walker.walk(topologyListener, tree);
 
-
-        if (DEBUG) {
-            logger.debug("Writing debug graphviz-file to " + GRAPHVIZ_OUT);
-            topologyListener.writeGraphvizFile(GRAPHVIZ_OUT);
-        }
-
-
+        topologyListener.writeGraphvizFile(dotFile.getAbsolutePath());
+        logger.info("Wrote to dot file: " + dotFile);
         logger.debug("The following topology was created after parsing:");
         for (Operator o : topologyListener.getTopology().values()) {
             logger.debug(o.toString());
         }
 
-        topology = topologyListener.getTopology();
+        return new ParseResult(topologyListener.getTopology(), dotFile.getAbsolutePath());
 
     }
 
-    public String generateTopologyFile() {
+    public String generateTopologyFile(Map<String, Operator> topology) {
         try {
             File temp = File.createTempFile("topology", ".txt");
             BufferedWriter bw = new BufferedWriter(new FileWriter(temp));
@@ -171,4 +163,13 @@ public class TopologyParser {
         throw new RuntimeException("Not yet implemented");
     }
 
+    public class ParseResult {
+        public Map<String, Operator> topology;
+        public String dotFile;
+
+        public ParseResult(Map<String, Operator> topology, String dotFile) {
+            this.topology = topology;
+            this.dotFile = dotFile;
+        }
+    }
 }
