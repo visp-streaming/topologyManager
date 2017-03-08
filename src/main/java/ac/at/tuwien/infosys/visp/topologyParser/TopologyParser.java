@@ -108,8 +108,8 @@ public class TopologyParser {
                 }
                 bw.write("  type = \"" + operator.getType() + "\"");
                 if (operator instanceof ProcessingOperator) {
-                    bw.write("  stateful = " + (operator.isStateful() ? "true" : "false") + ",\n");
-                    bw.write(",\n  size = " + operator.getSize().toString().toLowerCase() + ",\n");
+                    bw.write(",\n    stateful = " + (operator.isStateful() ? "true" : "false") + ",\n");
+                    bw.write("  size = " + operator.getSize().toString().toLowerCase() + ",\n");
                     bw.write("  expectedDuration = " + ((ProcessingOperator) operator).getExpectedDuration() + ",\n");
                     bw.write("  scalingCPUThreshold = " + ((ProcessingOperator) operator).getScalingCPUThreshold() + ",\n");
                     bw.write("  scalingMemoryThreshold = " + ((ProcessingOperator) operator).getScalingMemoryThreshold() + ",\n");

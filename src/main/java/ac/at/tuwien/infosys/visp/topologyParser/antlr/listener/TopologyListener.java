@@ -52,8 +52,6 @@ public class TopologyListener extends VispBaseListener {
             }
         }
 
-        logger.info("Wrote " + linesToWriteToGraphViz + " to " + filename);
-
     }
 
     @Override
