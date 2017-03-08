@@ -50,6 +50,23 @@ public class TopologyParser {
         }
     }
 
+    public ParseResult parseTopologyFromString(String content) {
+        logger.info("Starting parseTopologyFromString");
+
+        try {
+            String fileName = "tempTopologyFile.txt";
+            File f = new File(fileName);
+            FileWriter fw = new FileWriter(f,true);
+            fw.append(content);
+            fw.flush();
+            fw.close();
+            return parse(fileName, true);
+        } catch (IOException e) {
+            logger.error(e.getMessage());
+            throw new RuntimeException("Unable to parse topology file", e);
+        }
+    }
+
 
     private ParseResult parse(String inputFile, boolean loadFromClassPath) throws IOException {
         logger.info("Starting antlr parse process for input file: " + inputFile);
