@@ -56,11 +56,11 @@ public class TopologyParser {
         try {
             String fileName = "tempTopologyFile.txt";
             File f = new File(fileName);
-            FileWriter fw = new FileWriter(f,true);
+            FileWriter fw = new FileWriter(f,false);
             fw.append(content);
             fw.flush();
             fw.close();
-            return parse(fileName, true);
+            return parse(fileName, false);
         } catch (IOException e) {
             logger.error(e.getMessage());
             throw new RuntimeException("Unable to parse topology file", e);
