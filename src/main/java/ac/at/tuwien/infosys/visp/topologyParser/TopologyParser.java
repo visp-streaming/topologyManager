@@ -54,7 +54,8 @@ public class TopologyParser {
         logger.info("Starting parseTopologyFromString");
 
         try {
-            String fileName = "tempTopologyFile.txt";
+            File temp = File.createTempFile("tempTopologyFile", ".txt");
+            String fileName = temp.getAbsolutePath();
             File f = new File(fileName);
             FileWriter fw = new FileWriter(f,false);
             fw.append(content);
