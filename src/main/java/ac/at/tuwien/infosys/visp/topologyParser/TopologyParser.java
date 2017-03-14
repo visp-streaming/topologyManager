@@ -101,7 +101,9 @@ public class TopologyParser {
             logger.debug(o.toString());
         }
 
-        return new ParseResult(topologyListener.getTopology(), dotFile.getAbsolutePath());
+        Map<String, Operator> topology = topologyListener.getTopology();
+
+        return new ParseResult(topology, dotFile.getAbsolutePath());
 
     }
 
