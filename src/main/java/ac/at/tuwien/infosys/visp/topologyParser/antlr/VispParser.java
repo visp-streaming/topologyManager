@@ -1,9 +1,13 @@
+// Generated from /projects/dsg_practical/code/VISP-TopologyParser/src/main/java/ac/at/tuwien/infosys/visp/topologyParser/antlr/Visp.g4 by ANTLR 4.6
 package ac.at.tuwien.infosys.visp.topologyParser.antlr;
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
 import org.antlr.v4.runtime.*;
+import org.antlr.v4.runtime.misc.*;
 import org.antlr.v4.runtime.tree.*;
 import java.util.List;
+import java.util.Iterator;
+import java.util.ArrayList;
 
 @SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast"})
 public class VispParser extends Parser {
@@ -16,9 +20,9 @@ public class VispParser extends Parser {
 		T__0=1, T__1=2, T__2=3, T__3=4, T__4=5, T__5=6, T__6=7, T__7=8, T__8=9, 
 		T__9=10, T__10=11, T__11=12, T__12=13, T__13=14, T__14=15, T__15=16, T__16=17, 
 		T__17=18, T__18=19, T__19=20, T__20=21, T__21=22, T__22=23, NUMBER=24, 
-		LOCATION=25, SLASH=26, BOOLEAN=27, IP_ADDRESS=28, OCTET=29, DIGIT=30, 
-		SOURCE=31, OPERATOR=32, SINK=33, STRING=34, ID=35, RESOURCEPOOL=36, INT=37, 
-		PREPROC=38, WS=39;
+		LOCATION=25, SLASH=26, STAR=27, BOOLEAN=28, IP_ADDRESS=29, OCTET=30, DIGIT=31, 
+		SOURCE=32, OPERATOR=33, SINK=34, STRING=35, ID=36, RESOURCEPOOL=37, INT=38, 
+		PREPROC=39, WS=40;
 	public static final int
 		RULE_configfile = 0, RULE_nodeBlock = 1, RULE_nodeHead = 2, RULE_newNodeId = 3, 
 		RULE_sourceNode = 4, RULE_nodeBody = 5, RULE_statement = 6, RULE_allowedLocationsStmt = 7, 
@@ -41,15 +45,15 @@ public class VispParser extends Parser {
 		"'concreteLocation'", "'inputFormat'", "'mechanism'", "'type'", "'outputFormat'", 
 		"'stateful'", "'size'", "'small'", "'medium'", "'large'", "'expectedDuration'", 
 		"'scalingCPUThreshold'", "'scalingMemoryThreshold'", "'queueThreshold'", 
-		"'replicationAllowed'", "'pinned'", null, null, "'/'", null, null, null, 
-		null, "'Source'", "'Operator'", "'Sink'"
+		"'replicationAllowed'", "'pinned'", null, null, "'/'", "'*'", null, null, 
+		null, null, "'Source'", "'Operator'", "'Sink'"
 	};
 	private static final String[] _SYMBOLIC_NAMES = {
 		null, null, null, null, null, null, null, null, null, null, null, null, 
 		null, null, null, null, null, null, null, null, null, null, null, null, 
-		"NUMBER", "LOCATION", "SLASH", "BOOLEAN", "IP_ADDRESS", "OCTET", "DIGIT", 
-		"SOURCE", "OPERATOR", "SINK", "STRING", "ID", "RESOURCEPOOL", "INT", "PREPROC", 
-		"WS"
+		"NUMBER", "LOCATION", "SLASH", "STAR", "BOOLEAN", "IP_ADDRESS", "OCTET", 
+		"DIGIT", "SOURCE", "OPERATOR", "SINK", "STRING", "ID", "RESOURCEPOOL", 
+		"INT", "PREPROC", "WS"
 	};
 	public static final Vocabulary VOCABULARY = new VocabularyImpl(_LITERAL_NAMES, _SYMBOLIC_NAMES);
 
@@ -1339,7 +1343,7 @@ public class VispParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3)\u00b3\4\2\t\2\4"+
+		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3*\u00b3\4\2\t\2\4"+
 		"\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\4\13\t"+
 		"\13\4\f\t\f\4\r\t\r\4\16\t\16\4\17\t\17\4\20\t\20\4\21\t\21\4\22\t\22"+
 		"\4\23\t\23\4\24\t\24\4\25\t\25\4\26\t\26\4\27\t\27\4\30\t\30\3\2\6\2\62"+
@@ -1352,9 +1356,9 @@ public class VispParser extends Parser {
 		"\3\17\3\17\3\17\3\20\3\20\3\21\3\21\3\21\3\21\3\22\3\22\3\23\3\23\3\23"+
 		"\3\23\3\24\3\24\3\24\3\24\3\25\3\25\3\25\3\25\3\26\3\26\3\26\3\26\3\27"+
 		"\3\27\3\27\3\27\3\30\3\30\3\30\3\30\3\30\2\2\31\2\4\6\b\n\f\16\20\22\24"+
-		"\26\30\32\34\36 \"$&(*,.\2\4\3\2!#\3\2\21\23\u00b2\2\61\3\2\2\2\4\65\3"+
-		"\2\2\2\6:\3\2\2\2\bL\3\2\2\2\nN\3\2\2\2\f]\3\2\2\2\16m\3\2\2\2\20o\3\2"+
-		"\2\2\22w\3\2\2\2\24{\3\2\2\2\26\u0082\3\2\2\2\30\u0086\3\2\2\2\32\u008a"+
+		"\26\30\32\34\36 \"$&(*,.\2\4\3\2\"$\3\2\21\23\u00b2\2\61\3\2\2\2\4\65"+
+		"\3\2\2\2\6:\3\2\2\2\bL\3\2\2\2\nN\3\2\2\2\f]\3\2\2\2\16m\3\2\2\2\20o\3"+
+		"\2\2\2\22w\3\2\2\2\24{\3\2\2\2\26\u0082\3\2\2\2\30\u0086\3\2\2\2\32\u008a"+
 		"\3\2\2\2\34\u008e\3\2\2\2\36\u0092\3\2\2\2 \u0094\3\2\2\2\"\u0098\3\2"+
 		"\2\2$\u009a\3\2\2\2&\u009e\3\2\2\2(\u00a2\3\2\2\2*\u00a6\3\2\2\2,\u00aa"+
 		"\3\2\2\2.\u00ae\3\2\2\2\60\62\5\4\3\2\61\60\3\2\2\2\62\63\3\2\2\2\63\61"+
@@ -1362,7 +1366,7 @@ public class VispParser extends Parser {
 		"\f\7\289\7\4\2\29\5\3\2\2\2:;\5\b\5\2;<\7\5\2\2<=\5\36\20\2=H\7\6\2\2"+
 		">I\3\2\2\2?I\5\n\6\2@E\5\n\6\2AB\7\7\2\2BD\5\n\6\2CA\3\2\2\2DG\3\2\2\2"+
 		"EC\3\2\2\2EF\3\2\2\2FI\3\2\2\2GE\3\2\2\2H>\3\2\2\2H?\3\2\2\2H@\3\2\2\2"+
-		"IJ\3\2\2\2JK\7\b\2\2K\7\3\2\2\2LM\7%\2\2M\t\3\2\2\2NO\7%\2\2O\13\3\2\2"+
+		"IJ\3\2\2\2JK\7\b\2\2K\7\3\2\2\2LM\7&\2\2M\t\3\2\2\2NO\7&\2\2O\13\3\2\2"+
 		"\2P^\3\2\2\2Q^\5\16\b\2RW\5\16\b\2ST\7\7\2\2TV\5\16\b\2US\3\2\2\2VY\3"+
 		"\2\2\2WU\3\2\2\2WX\3\2\2\2X[\3\2\2\2YW\3\2\2\2Z\\\7\7\2\2[Z\3\2\2\2[\\"+
 		"\3\2\2\2\\^\3\2\2\2]P\3\2\2\2]Q\3\2\2\2]R\3\2\2\2^\r\3\2\2\2_n\5\20\t"+
@@ -1372,12 +1376,12 @@ public class VispParser extends Parser {
 		"\2mf\3\2\2\2mg\3\2\2\2mh\3\2\2\2mi\3\2\2\2mj\3\2\2\2mk\3\2\2\2ml\3\2\2"+
 		"\2n\17\3\2\2\2op\7\t\2\2pt\7\5\2\2qs\7\33\2\2rq\3\2\2\2sv\3\2\2\2tr\3"+
 		"\2\2\2tu\3\2\2\2u\21\3\2\2\2vt\3\2\2\2wx\7\n\2\2xy\7\5\2\2yz\7\33\2\2"+
-		"z\23\3\2\2\2{|\7\13\2\2|~\7\5\2\2}\177\7$\2\2~}\3\2\2\2\177\u0080\3\2"+
+		"z\23\3\2\2\2{|\7\13\2\2|~\7\5\2\2}\177\7%\2\2~}\3\2\2\2\177\u0080\3\2"+
 		"\2\2\u0080~\3\2\2\2\u0080\u0081\3\2\2\2\u0081\25\3\2\2\2\u0082\u0083\7"+
-		"\f\2\2\u0083\u0084\7\5\2\2\u0084\u0085\7$\2\2\u0085\27\3\2\2\2\u0086\u0087"+
-		"\7\r\2\2\u0087\u0088\7\5\2\2\u0088\u0089\7$\2\2\u0089\31\3\2\2\2\u008a"+
-		"\u008b\7\16\2\2\u008b\u008c\7\5\2\2\u008c\u008d\7$\2\2\u008d\33\3\2\2"+
-		"\2\u008e\u008f\7\17\2\2\u008f\u0090\7\5\2\2\u0090\u0091\7\35\2\2\u0091"+
+		"\f\2\2\u0083\u0084\7\5\2\2\u0084\u0085\7%\2\2\u0085\27\3\2\2\2\u0086\u0087"+
+		"\7\r\2\2\u0087\u0088\7\5\2\2\u0088\u0089\7%\2\2\u0089\31\3\2\2\2\u008a"+
+		"\u008b\7\16\2\2\u008b\u008c\7\5\2\2\u008c\u008d\7%\2\2\u008d\33\3\2\2"+
+		"\2\u008e\u008f\7\17\2\2\u008f\u0090\7\5\2\2\u0090\u0091\7\36\2\2\u0091"+
 		"\35\3\2\2\2\u0092\u0093\t\2\2\2\u0093\37\3\2\2\2\u0094\u0095\7\20\2\2"+
 		"\u0095\u0096\7\5\2\2\u0096\u0097\5\"\22\2\u0097!\3\2\2\2\u0098\u0099\t"+
 		"\3\2\2\u0099#\3\2\2\2\u009a\u009b\7\24\2\2\u009b\u009c\7\5\2\2\u009c\u009d"+
@@ -1385,8 +1389,8 @@ public class VispParser extends Parser {
 		"\u00a1\7\32\2\2\u00a1\'\3\2\2\2\u00a2\u00a3\7\26\2\2\u00a3\u00a4\7\5\2"+
 		"\2\u00a4\u00a5\7\32\2\2\u00a5)\3\2\2\2\u00a6\u00a7\7\27\2\2\u00a7\u00a8"+
 		"\7\5\2\2\u00a8\u00a9\7\32\2\2\u00a9+\3\2\2\2\u00aa\u00ab\7\30\2\2\u00ab"+
-		"\u00ac\7\5\2\2\u00ac\u00ad\7\35\2\2\u00ad-\3\2\2\2\u00ae\u00af\7\31\2"+
-		"\2\u00af\u00b0\7\5\2\2\u00b0\u00b1\7\35\2\2\u00b1/\3\2\2\2\13\63EHW[]"+
+		"\u00ac\7\5\2\2\u00ac\u00ad\7\36\2\2\u00ad-\3\2\2\2\u00ae\u00af\7\31\2"+
+		"\2\u00af\u00b0\7\5\2\2\u00b0\u00b1\7\36\2\2\u00b1/\3\2\2\2\13\63EHW[]"+
 		"mt\u0080";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());

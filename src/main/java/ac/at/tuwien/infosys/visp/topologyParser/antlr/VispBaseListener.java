@@ -1,3 +1,4 @@
+// Generated from /projects/dsg_practical/code/VISP-TopologyParser/src/main/java/ac/at/tuwien/infosys/visp/topologyParser/antlr/Visp.g4 by ANTLR 4.6
 package ac.at.tuwien.infosys.visp.topologyParser.antlr;
 
 import org.antlr.v4.runtime.ParserRuleContext;

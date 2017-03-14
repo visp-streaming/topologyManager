@@ -28,6 +28,7 @@ pinnedStmt : 'pinned' '=' BOOLEAN ;
 NUMBER : DOUBLE | INT ;
 LOCATION : IP_ADDRESS SLASH RESOURCEPOOL ;
 SLASH : '/' ;
+STAR : '*' ;
 BOOLEAN : 'true' | 'false' ;
 IP_ADDRESS : OCTET '.' OCTET '.' OCTET '.' OCTET ;
 OCTET
@@ -39,9 +40,9 @@ DIGIT :  '0'..'9' ;
 SOURCE : 'Source' ;
 OPERATOR : 'Operator' ;
 SINK : 'Sink' ;
-STRING      :   '"' ('\\"'|.)*? '"' | (LETTER | [0-9])+;
+STRING      :   '"' ('\\"'|.)*? '"' | (LETTER | [0-9])+ ;
 ID  :   '$' LETTER (LETTER | [0-9])* ;
-RESOURCEPOOL : STRING ;
+RESOURCEPOOL : STRING | STAR;
 
 
 fragment
