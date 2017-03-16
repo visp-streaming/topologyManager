@@ -139,7 +139,8 @@ public class TopologyListener extends VispBaseListener {
 
         String toWrite = "\"" + currentNodeName + "\" [style=filled, fontname=\"helvetica\", shape=box, fillcolor=" + color +
                 ", label=<" + currentNodeName + "<BR />\n" +
-                "\t<FONT POINT-SIZE=\"10\">" + newOperator.getConcreteLocation() + "</FONT>>"
+                "\t<FONT POINT-SIZE=\"10\">" + newOperator.getConcreteLocation() +
+                (newOperator.getSize() != null ? "<BR />\nSize: " + newOperator.getSize().toString().toLowerCase() : "") + "</FONT>>"
                 + "]";
         this.linesToWriteToGraphViz.add("\t" + toWrite + "\n");
 
@@ -272,6 +273,8 @@ public class TopologyListener extends VispBaseListener {
             newOperator.setSize(Operator.Size.MEDIUM);
         } else if (sizeString.equals("large")) {
             newOperator.setSize(Operator.Size.LARGE);
+        } else if (sizeString.equals("unknown")) {
+            newOperator.setSize(Operator.Size.UNKNOWN);
         } else {
             throw new RuntimeException("Unknown operator size: " + sizeString);
         }
