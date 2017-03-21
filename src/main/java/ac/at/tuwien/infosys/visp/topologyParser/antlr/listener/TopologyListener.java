@@ -7,7 +7,6 @@ import ac.at.tuwien.infosys.visp.common.operators.Source;
 import ac.at.tuwien.infosys.visp.topologyParser.antlr.VispBaseListener;
 import ac.at.tuwien.infosys.visp.topologyParser.antlr.VispParser;
 import org.antlr.v4.runtime.tree.TerminalNode;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
 import java.io.*;
@@ -16,7 +15,7 @@ import java.util.*;
 public class TopologyListener extends VispBaseListener {
     VispParser parser;
     List<String> linesToWriteToGraphViz;
-    private static final Logger logger = Logger.getLogger(TopologyListener.class);
+    private static final Logger LOG = Logger.getLogger(TopologyListener.class);
 
 
     String currentNodeName = "";
@@ -42,7 +41,7 @@ public class TopologyListener extends VispBaseListener {
     }
 
     public void writeGraphvizFile(String filename) throws IOException {
-        logger.info("in writeGraphvizFile for filename " + filename);
+        LOG.info("in writeGraphvizFile for filename " + filename);
         linesToWriteToGraphViz.add("\n}");
 
         try (Writer writer = new BufferedWriter(new OutputStreamWriter(
@@ -118,9 +117,11 @@ public class TopologyListener extends VispBaseListener {
 
             // pick one randomly from allowed ones
 
-            newOperator.setConcreteLocation(newOperator.getAllowedLocationsList().get(
-                    new Random().nextInt(newOperator.getAllowedLocationsList().size())));
-            logger.info("concrete location was not specified - " +
+            Operator.Location locationToClone = newOperator.getAllowedLocationsList().get(
+                    new Random().nextInt(newOperator.getAllowedLocationsList().size()));
+            Operator.Location newLocation = new Operator.Location(locationToClone.getIpAddress(), locationToClone.getResourcePool());
+            newOperator.setConcreteLocation(newLocation);
+            LOG.info("concrete location was not specified - " +
                     "picked concrete location to be " + newOperator.getConcreteLocation().getIpAddress() + "/" +
                     newOperator.getConcreteLocation().getResourcePool());
         }
@@ -148,14 +149,14 @@ public class TopologyListener extends VispBaseListener {
 
     @Override
     public void enterNewNodeId(VispParser.NewNodeIdContext ctx) {
-        logger.debug("define a new node with the id " + ctx.getText());
+        LOG.debug("define a new node with the id " + ctx.getText());
         currentNodeName = ctx.getText().substring(1); // remove the dollar sign
     }
 
 
     @Override
     public void enterSourceNode(VispParser.SourceNodeContext ctx) {
-        logger.debug("add node " + ctx.getText() + " as a source for node " + currentNodeName);
+        LOG.debug("add node " + ctx.getText() + " as a source for node " + currentNodeName);
         newOperator.getSourcesText().add(ctx.getText().substring(1)); // remove dollar sign
         linesToWriteToGraphViz.add("\"" + ctx.getText().substring(1) + "\" -> \"" + currentNodeName + "\"\n");
     }
@@ -163,18 +164,19 @@ public class TopologyListener extends VispBaseListener {
     @Override
     public void enterAllowedLocationsStmt(VispParser.AllowedLocationsStmtContext ctx) {
         if (newOperator instanceof Source || newOperator instanceof Sink) {
-            logger.warn("allowedLocations statement has no effect for operator type Source/Sink");
+            LOG.warn("allowedLocations statement has no effect for operator type Source/Sink");
             return;
         }
+        List<Operator.Location> allowedLocations = new ArrayList<>();
+
         allowedLocationsIsSet = true;
         for (TerminalNode location : ctx.LOCATION()) {
             Operator.Location operatorLocation = new Operator.Location(getIpAddress(location.getText()), getResourcePool(location.getText()));
-            newOperator.getAllowedLocationsList().add(operatorLocation);
+            allowedLocations.add(operatorLocation);
         }
 
-        // TODO: remove the old String form
-        newOperator.setAllowedLocations(StringUtils.join(newOperator.getAllowedLocationsList(), ","));
-
+        newOperator.setAllowedLocationsList(allowedLocations);
+        LOG.info("Setting allowed locations to : " + allowedLocations);
     }
 
     private String getResourcePool(String text) {
@@ -199,7 +201,7 @@ public class TopologyListener extends VispBaseListener {
     @Override
     public void enterStatefulStmt(VispParser.StatefulStmtContext ctx) {
         if (newOperator instanceof Source || newOperator instanceof Sink) {
-            logger.warn("stateful statement has no effect for operator type Source/Sink");
+            LOG.warn("stateful statement has no effect for operator type Source/Sink");
             return;
         }
         statefulIsSet = true;
@@ -216,7 +218,7 @@ public class TopologyListener extends VispBaseListener {
     @Override
     public void enterOutputFormatStmt(VispParser.OutputFormatStmtContext ctx) {
         if (newOperator instanceof Sink) {
-            logger.warn("output format statement has no effect for operator type Sink");
+            LOG.warn("output format statement has no effect for operator type Sink");
             return;
         }
         newOperator.setOutputFormat(stringRemoveQuotes(ctx.STRING().getText()));
@@ -233,7 +235,7 @@ public class TopologyListener extends VispBaseListener {
     @Override
     public void enterNodeType(VispParser.NodeTypeContext ctx) {
 
-        logger.debug("Node " + currentNodeName + " has nodeType " + ctx.getText());
+        LOG.debug("Node " + currentNodeName + " has nodeType " + ctx.getText());
         switch (ctx.getText()) {
             case "Source":
                 newOperator = new Source();
@@ -262,7 +264,7 @@ public class TopologyListener extends VispBaseListener {
     @Override
     public void enterSizeStmt(VispParser.SizeStmtContext ctx) {
         if (newOperator instanceof Source || newOperator instanceof Sink) {
-            logger.warn("size statement has no effect for operator type Source/Sink");
+            LOG.warn("size statement has no effect for operator type Source/Sink");
             return;
         }
 
@@ -283,78 +285,78 @@ public class TopologyListener extends VispBaseListener {
     @Override
     public void enterExpectedDurationStmt(VispParser.ExpectedDurationStmtContext ctx) {
         if (newOperator instanceof Source || newOperator instanceof Sink) {
-            logger.warn("expectedDuration statement has no effect for operator type Source/Sink");
+            LOG.warn("expectedDuration statement has no effect for operator type Source/Sink");
             return;
         }
         try {
             ((ProcessingOperator) newOperator).setExpectedDuration(Double.parseDouble(ctx.NUMBER().getText()));
         } catch (Exception e) {
-            logger.error("Could not set optional attribute expected duration");
+            LOG.error("Could not set optional attribute expected duration");
         }
     }
 
     @Override
     public void enterScalingCPUThresholdStmt(VispParser.ScalingCPUThresholdStmtContext ctx) {
         if (newOperator instanceof Source || newOperator instanceof Sink) {
-            logger.warn("scalingCPUThreshold statement has no effect for operator type Source/Sink");
+            LOG.warn("scalingCPUThreshold statement has no effect for operator type Source/Sink");
             return;
         }
         try {
             ((ProcessingOperator) newOperator).setScalingCPUThreshold(Double.parseDouble(ctx.NUMBER().getText()));
         } catch (Exception e) {
-            logger.error("Could not set optional attribute scalingCPUThreshold");
+            LOG.error("Could not set optional attribute scalingCPUThreshold");
         }
     }
 
     @Override
     public void enterScalingMemoryThresholdStmt(VispParser.ScalingMemoryThresholdStmtContext ctx) {
         if (newOperator instanceof Source || newOperator instanceof Sink) {
-            logger.warn("scalingMemoryThreshold statement has no effect for operator type Source/Sink");
+            LOG.warn("scalingMemoryThreshold statement has no effect for operator type Source/Sink");
             return;
         }
         try {
             ((ProcessingOperator) newOperator).setScalingMemoryThreshold(Double.parseDouble(ctx.NUMBER().getText()));
         } catch (Exception e) {
-            logger.error("Could not set optional attribute scalingMemoryThreshold");
+            LOG.error("Could not set optional attribute scalingMemoryThreshold");
         }
     }
 
     @Override
     public void enterQueueThreshold(VispParser.QueueThresholdContext ctx) {
         if (newOperator instanceof Source || newOperator instanceof Sink) {
-            logger.warn("queueThreshold statement has no effect for operator type Source/Sink");
+            LOG.warn("queueThreshold statement has no effect for operator type Source/Sink");
             return;
         }
         try {
             ((ProcessingOperator) newOperator).setQueueThreshold(Double.parseDouble(ctx.NUMBER().getText()));
         } catch (Exception e) {
-            logger.error("Could not set optional attribute queueThreshold");
+            LOG.error("Could not set optional attribute queueThreshold");
         }
     }
 
     @Override
     public void enterPinnedStmt(VispParser.PinnedStmtContext ctx) {
         if (newOperator instanceof Source || newOperator instanceof Sink) {
-            logger.warn("pinned statement has no effect for operator type Source/Sink");
+            LOG.warn("pinned statement has no effect for operator type Source/Sink");
             return;
         }
         try {
             ((ProcessingOperator) newOperator).setPinned(ctx.BOOLEAN().getText().toLowerCase().equals("true"));
         } catch (Exception e) {
-            logger.error("Could not set optional attribute pinned");
+            LOG.error("Could not set optional attribute pinned");
         }
     }
 
     @Override
     public void enterReplicationAllowedStmt(VispParser.ReplicationAllowedStmtContext ctx) {
         if (newOperator instanceof Source || newOperator instanceof Sink) {
-            logger.warn("replicationAllowed statement has no effect for operator type Source/Sink");
+            LOG.warn("replicationAllowed statement has no effect for operator type Source/Sink");
             return;
         }
         try {
             ((ProcessingOperator) newOperator).setReplicationAllowed(ctx.BOOLEAN().getText().toLowerCase().equals("true"));
         } catch (Exception e) {
-            logger.error("Could not set optional attribute replicationAllowed");
+            LOG.error("Could not set optional attribute replicationAllowed");
         }
     }
 
@@ -365,7 +367,7 @@ public class TopologyListener extends VispBaseListener {
                 try {
                     topology.get(name).getSources().add(topology.get(source));
                 } catch (Exception e) {
-                    logger.warn("Could not set source '" + source + "' for node '" + currentNodeName + "'");
+                    LOG.warn("Could not set source '" + source + "' for node '" + currentNodeName + "'");
                 }
             }
         }
@@ -385,7 +387,7 @@ public class TopologyListener extends VispBaseListener {
                 }
             }
             if (!foundAsSource) {
-                logger.warn("Non-sink node " + o.getName() + " is used nowhere as a source");
+                LOG.warn("Non-sink node " + o.getName() + " is used nowhere as a source");
             }
         }
     }
