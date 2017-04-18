@@ -237,4 +237,14 @@ public interface VispListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitPinnedStmt(VispParser.PinnedStmtContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link VispParser#pathOrderStmt}.
+	 * @param ctx the parse tree
+	 */
+	void enterPathOrderStmt(VispParser.PathOrderStmtContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link VispParser#pathOrderStmt}.
+	 * @param ctx the parse tree
+	 */
+	void exitPathOrderStmt(VispParser.PathOrderStmtContext ctx);
 }
