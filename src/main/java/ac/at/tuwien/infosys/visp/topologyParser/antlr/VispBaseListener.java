@@ -287,6 +287,18 @@ public class VispBaseListener implements VispListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitPinnedStmt(VispParser.PinnedStmtContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterPathOrderStmt(VispParser.PathOrderStmtContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitPathOrderStmt(VispParser.PathOrderStmtContext ctx) { }
 
 	/**
 	 * {@inheritDoc}

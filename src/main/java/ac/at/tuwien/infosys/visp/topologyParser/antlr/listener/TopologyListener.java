@@ -3,6 +3,8 @@ package ac.at.tuwien.infosys.visp.topologyParser.antlr.listener;
 import ac.at.tuwien.infosys.visp.common.operators.Operator;
 import ac.at.tuwien.infosys.visp.common.operators.ProcessingOperator;
 import ac.at.tuwien.infosys.visp.common.operators.Sink;
+import ac.at.tuwien.infosys.visp.common.operators.Split;
+import ac.at.tuwien.infosys.visp.common.operators.Join;
 import ac.at.tuwien.infosys.visp.common.operators.Source;
 import ac.at.tuwien.infosys.visp.topologyParser.antlr.VispBaseListener;
 import ac.at.tuwien.infosys.visp.topologyParser.antlr.VispParser;
@@ -27,7 +29,7 @@ public class TopologyListener extends VispBaseListener {
     // the following fields MUST be set, otherwise the input is not accepted:
 
     boolean typeIsSet,
-            allowedLocationsIsSet, statefulIsSet, concreteLocationIsSet;
+            allowedLocationsIsSet, statefulIsSet, concreteLocationIsSet, pathOrderIsSet;
 
 
     public TopologyListener(VispParser parser) {
@@ -72,6 +74,20 @@ public class TopologyListener extends VispBaseListener {
         // this method is called when the parsing of a certain node is completed
         // now it is time to create the corresponding object and
         // add it to the topology
+
+        if(newOperator instanceof Join) {
+            finishOperatorCreation();
+            return;
+        }
+
+        if(newOperator instanceof Split) {
+            if(!pathOrderIsSet) {
+                throw new RuntimeException("Path order not set for split operator " + currentNodeName);
+            } else {
+                finishOperatorCreation();
+                return;
+            }
+        }
 
         if (newOperator instanceof ProcessingOperator) {
             if (!typeIsSet) {
@@ -126,6 +142,12 @@ public class TopologyListener extends VispBaseListener {
                     newOperator.getConcreteLocation().getResourcePool());
         }
 
+        finishOperatorCreation();
+        return;
+
+    }
+
+    private void finishOperatorCreation() {
         newOperator.setName(currentNodeName);
         topology.put(currentNodeName, newOperator);
 
@@ -144,7 +166,6 @@ public class TopologyListener extends VispBaseListener {
                 (newOperator.getSize() != null ? "<BR />\nSize: " + newOperator.getSize().toString().toLowerCase() : "") + "</FONT>>"
                 + "]";
         this.linesToWriteToGraphViz.add("\t" + toWrite + "\n");
-
     }
 
     @Override
@@ -216,6 +237,21 @@ public class TopologyListener extends VispBaseListener {
     }
 
     @Override
+    public void enterPathOrderStmt(VispParser.PathOrderStmtContext ctx) {
+        if(newOperator instanceof Split) {
+            pathOrderIsSet = true;
+            List<String> pathOrder = new ArrayList<>();
+            for(TerminalNode t : ctx.ID()) {
+                pathOrder.add(t.toString().substring(1)); // remove dollar sign
+            }
+            ((Split) newOperator).setPathOrder(pathOrder);
+        } else {
+            LOG.warn("Ignoring pathOrder statement for operator " + currentNodeName +
+                    " (not applicable for operator type)");
+        }
+    }
+
+    @Override
     public void enterOutputFormatStmt(VispParser.OutputFormatStmtContext ctx) {
         if (newOperator instanceof Sink) {
             LOG.warn("output format statement has no effect for operator type Sink");
@@ -245,6 +281,12 @@ public class TopologyListener extends VispBaseListener {
                 break;
             case "Sink":
                 newOperator = new Sink();
+                break;
+            case "Split":
+                newOperator = new Split();
+                break;
+            case "Join":
+                newOperator = new Join();
                 break;
             default:
                 throw new RuntimeException("Invalid node type: " + ctx.getText());
