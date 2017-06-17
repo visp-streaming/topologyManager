@@ -75,13 +75,13 @@ public class TopologyListener extends VispBaseListener {
         // now it is time to create the corresponding object and
         // add it to the topology
 
-        if(newOperator instanceof Join) {
+        if (newOperator instanceof Join) {
             finishOperatorCreation();
             return;
         }
 
-        if(newOperator instanceof Split) {
-            if(!pathOrderIsSet) {
+        if (newOperator instanceof Split) {
+            if (!pathOrderIsSet) {
                 throw new RuntimeException("Path order not set for split operator " + currentNodeName);
             } else {
                 finishOperatorCreation();
@@ -127,7 +127,7 @@ public class TopologyListener extends VispBaseListener {
         if (!concreteLocationIsSet) {
             // concrete location was not explicitly set
 
-            if(newOperator instanceof Source || newOperator instanceof Sink) {
+            if (newOperator instanceof Source || newOperator instanceof Sink) {
                 throw new RuntimeException("No concreteLocation set for source/sink " + currentNodeName);
             }
 
@@ -152,9 +152,9 @@ public class TopologyListener extends VispBaseListener {
         topology.put(currentNodeName, newOperator);
 
         String color = "";
-        if(newOperator instanceof Source) {
+        if (newOperator instanceof Source) {
             color = "beige";
-        } else if(newOperator instanceof ProcessingOperator) {
+        } else if (newOperator instanceof ProcessingOperator) {
             color = "skyblue";
         } else {
             color = "springgreen";
@@ -238,10 +238,10 @@ public class TopologyListener extends VispBaseListener {
 
     @Override
     public void enterPathOrderStmt(VispParser.PathOrderStmtContext ctx) {
-        if(newOperator instanceof Split) {
+        if (newOperator instanceof Split) {
             pathOrderIsSet = true;
             List<String> pathOrder = new ArrayList<>();
-            for(TerminalNode t : ctx.ID()) {
+            for (TerminalNode t : ctx.ID()) {
                 pathOrder.add(t.toString().substring(1)); // remove dollar sign
             }
             ((Split) newOperator).setPathOrder(pathOrder);
@@ -403,6 +403,28 @@ public class TopologyListener extends VispBaseListener {
     }
 
     @Override
+    public void enterCompensationStmt(VispParser.CompensationStmtContext ctx) {
+        if (newOperator instanceof Source || newOperator instanceof Sink) {
+            LOG.warn("compensation statement has no effect for operator type Source/Sink");
+            return;
+        }
+        String compensationValue = stringRemoveQuotes(ctx.STRING().getText());
+        String[] allowedValues = {"redeploysingle", "redeploytopology", "mailto", "deploy"};
+        boolean usesValidValue = false;
+        for (String s : allowedValues) {
+            if (compensationValue.toLowerCase().contains(s)) {
+                usesValidValue = true;
+            }
+        }
+        if (!usesValidValue) {
+            throw new RuntimeException("Unsupported value for compensation: '" + compensationValue +
+                    "'; Use one of: {redeploySingle, redeployTopology, mailto:<email>, deploy:<url>}");
+        }
+        ((ProcessingOperator) newOperator).setCompensation(compensationValue);
+
+    }
+
+    @Override
     public void exitConfigfile(VispParser.ConfigfileContext ctx) {
         for (String name : topology.keySet()) {
             for (String source : topology.get(name).getSourcesText()) {
@@ -445,6 +467,8 @@ public class TopologyListener extends VispBaseListener {
             ((ProcessingOperator) newOperator).setScalingCPUThreshold(0.0);
             ((ProcessingOperator) newOperator).setScalingMemoryThreshold(0.0);
             ((ProcessingOperator) newOperator).setExpectedDuration(0.0);
+            ((ProcessingOperator) newOperator).setCompensation("redeploySingle");
+
         }
 
     }
