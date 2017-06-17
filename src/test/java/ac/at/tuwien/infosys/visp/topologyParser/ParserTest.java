@@ -126,5 +126,19 @@ public class ParserTest {
 
     }
 
+    @Test
+    public void test_compensation_validValue() {
+        String compensationValue = ((ProcessingOperator)topology.get("step2")).getCompensation();
+        Assert.assertTrue("mailto:e1109965@student.tuwien.ac.at".equals(compensationValue));
+    }
+
+    @Test(expected = RuntimeException.class)
+    public void test_compensation_invalidValue() {
+        TopologyParser parser2 = new TopologyParser();
+        TopologyParser.ParseResult topology2 = parser2.parseTopologyFromClasspath("invalid_compensation_value.conf");
+        String compensationValue = ((ProcessingOperator)topology2.topology.get("step2")).getCompensation();
+        logger.warn(compensationValue);
+    }
+
 
 }

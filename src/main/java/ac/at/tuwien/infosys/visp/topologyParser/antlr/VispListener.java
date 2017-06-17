@@ -1,4 +1,4 @@
-// Generated from /projects/dsg_practical/code/VISP-TopologyParser/src/main/java/ac/at/tuwien/infosys/visp/topologyParser/antlr/Visp.g4 by ANTLR 4.6
+// Generated from /projects/dsg_practical/code/VISP-TopologyParser/src/main/java/ac/at/tuwien/infosys/visp/topologyParser/antlr/Visp.g4 by ANTLR 4.7
 package ac.at.tuwien.infosys.visp.topologyParser.antlr;
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
@@ -247,4 +247,14 @@ public interface VispListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitPathOrderStmt(VispParser.PathOrderStmtContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link VispParser#compensationStmt}.
+	 * @param ctx the parse tree
+	 */
+	void enterCompensationStmt(VispParser.CompensationStmtContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link VispParser#compensationStmt}.
+	 * @param ctx the parse tree
+	 */
+	void exitCompensationStmt(VispParser.CompensationStmtContext ctx);
 }

@@ -1,4 +1,4 @@
-// Generated from /projects/dsg_practical/code/VISP-TopologyParser/src/main/java/ac/at/tuwien/infosys/visp/topologyParser/antlr/Visp.g4 by ANTLR 4.6
+// Generated from /projects/dsg_practical/code/VISP-TopologyParser/src/main/java/ac/at/tuwien/infosys/visp/topologyParser/antlr/Visp.g4 by ANTLR 4.7
 package ac.at.tuwien.infosys.visp.topologyParser.antlr;
 
 import org.antlr.v4.runtime.ParserRuleContext;
@@ -299,6 +299,18 @@ public class VispBaseListener implements VispListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitPathOrderStmt(VispParser.PathOrderStmtContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterCompensationStmt(VispParser.CompensationStmtContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitCompensationStmt(VispParser.CompensationStmtContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
