@@ -15,21 +15,20 @@ import java.io.*;
 import java.util.*;
 
 public class TopologyListener extends VispBaseListener {
-    VispParser parser;
-    List<String> linesToWriteToGraphViz;
+    public VispParser parser;
+    public List<String> linesToWriteToGraphViz;
     private static final Logger LOG = Logger.getLogger(TopologyListener.class);
 
 
-    String currentNodeName = "";
+    public String currentNodeName = "";
 
-    Operator newOperator;
+    public Operator newOperator;
 
     private Map<String, Operator> topology = new LinkedHashMap<>();
 
     // the following fields MUST be set, otherwise the input is not accepted:
 
-    boolean typeIsSet,
-            allowedLocationsIsSet, statefulIsSet, concreteLocationIsSet, pathOrderIsSet;
+    public boolean typeIsSet, allowedLocationsIsSet, statefulIsSet, concreteLocationIsSet, pathOrderIsSet;
 
 
     public TopologyListener(VispParser parser) {
@@ -91,23 +90,19 @@ public class TopologyListener extends VispBaseListener {
 
         if (newOperator instanceof ProcessingOperator) {
             if (!typeIsSet) {
-                throw new RuntimeException("Type not set for operator " +
-                        currentNodeName);
+                throw new RuntimeException("Type not set for operator " + currentNodeName);
             }
 
             if (newOperator.getSourcesText().size() == 0) {
-                throw new RuntimeException("No sources set for operator " +
-                        currentNodeName);
+                throw new RuntimeException("No sources set for operator " + currentNodeName);
             }
 
             if (!allowedLocationsIsSet) {
-                throw new RuntimeException("Allowed locations not set for operator " +
-                        currentNodeName);
+                throw new RuntimeException("Allowed locations not set for operator " + currentNodeName);
             }
 
             if (!statefulIsSet) {
-                throw new RuntimeException("Stateful not set for operator " +
-                        currentNodeName);
+                throw new RuntimeException("Stateful not set for operator " + currentNodeName);
             }
         } else {
             if (typeIsSet) {
@@ -143,7 +138,6 @@ public class TopologyListener extends VispBaseListener {
         }
 
         finishOperatorCreation();
-        return;
 
     }
 
@@ -151,7 +145,7 @@ public class TopologyListener extends VispBaseListener {
         newOperator.setName(currentNodeName);
         topology.put(currentNodeName, newOperator);
 
-        String color = "";
+        String color;
         if (newOperator instanceof Source) {
             color = "beige";
         } else if (newOperator instanceof ProcessingOperator) {
@@ -311,16 +305,12 @@ public class TopologyListener extends VispBaseListener {
         }
 
         String sizeString = ctx.sizeType().getText();
-        if (sizeString.equals("small")) {
-            newOperator.setSize(Operator.Size.SMALL);
-        } else if (sizeString.equals("medium")) {
-            newOperator.setSize(Operator.Size.MEDIUM);
-        } else if (sizeString.equals("large")) {
-            newOperator.setSize(Operator.Size.LARGE);
-        } else if (sizeString.equals("unknown")) {
-            newOperator.setSize(Operator.Size.UNKNOWN);
-        } else {
-            throw new RuntimeException("Unknown operator size: " + sizeString);
+        switch (sizeString) {
+            case "small": newOperator.setSize(Operator.Size.SMALL); break;
+            case "medium": newOperator.setSize(Operator.Size.MEDIUM); break;
+            case "large": newOperator.setSize(Operator.Size.LARGE); break;
+            case "unknown": newOperator.setSize(Operator.Size.UNKNOWN); break;
+            default: throw new RuntimeException("Unknown operator size: " + sizeString);
         }
     }
 
@@ -457,8 +447,8 @@ public class TopologyListener extends VispBaseListener {
     }
 
     private void initOperator() {
-        newOperator.setSourcesText(new ArrayList<String>());
-        newOperator.setAllowedLocationsList(new ArrayList<Operator.Location>());
+        newOperator.setSourcesText(new ArrayList<>());
+        newOperator.setAllowedLocationsList(new ArrayList<>());
         if (newOperator instanceof ProcessingOperator) {
             newOperator.setSize(Operator.Size.UNKNOWN); // default
             ((ProcessingOperator) newOperator).setPinned(false);
@@ -468,7 +458,6 @@ public class TopologyListener extends VispBaseListener {
             ((ProcessingOperator) newOperator).setScalingMemoryThreshold(0.0);
             ((ProcessingOperator) newOperator).setExpectedDuration(0.0);
             ((ProcessingOperator) newOperator).setCompensation("redeploySingle");
-
         }
 
     }
