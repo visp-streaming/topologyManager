@@ -7,15 +7,13 @@ import ac.at.tuwien.infosys.visp.common.operators.Source;
 import ac.at.tuwien.infosys.visp.topologyParser.antlr.VispLexer;
 import ac.at.tuwien.infosys.visp.topologyParser.antlr.VispParser;
 import ac.at.tuwien.infosys.visp.topologyParser.antlr.listener.TopologyListener;
-import org.antlr.v4.runtime.ANTLRInputStream;
+import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import org.apache.log4j.Logger;
 
-
 import java.io.*;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -78,8 +76,8 @@ public class TopologyParser {
         } else {
             is = new FileInputStream(inputFile);
         }
-        ANTLRInputStream antlrInputStream = new ANTLRInputStream(is);
-        VispLexer lexer = new VispLexer(antlrInputStream);
+
+        VispLexer lexer = new VispLexer(CharStreams.fromStream(is));
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         VispParser parser = new VispParser(tokens);
         ParseTree tree = parser.configfile();
