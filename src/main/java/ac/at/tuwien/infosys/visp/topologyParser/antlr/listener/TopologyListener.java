@@ -427,6 +427,7 @@ public class TopologyListener extends VispBaseListener {
         }
 
         checkIsEachNonSinkIsUsedAsSource();
+        checkIfPathOrderContainsAllPaths();
     }
 
     private void checkIsEachNonSinkIsUsedAsSource() {
@@ -444,6 +445,36 @@ public class TopologyListener extends VispBaseListener {
                 LOG.warn("Non-sink node " + o.getName() + " is used nowhere as a source");
             }
         }
+    }
+
+    private void checkIfPathOrderContainsAllPaths() {
+        for(String operatorId : topology.keySet()) {
+            Operator op = topology.get(operatorId);
+            if(! (op instanceof Split)) {
+                continue;
+            }
+            List<String> pathOrder = ((Split) op).getPathOrder();
+            List<String> allOutgoingPaths = getAllOutgoingPaths(operatorId);
+            for(String path : allOutgoingPaths) {
+                if(!pathOrder.contains(path)) {
+                    throw new RuntimeException("Operator " + operatorId + "'s pathOrder does not contain path " + path);
+                }
+            }
+
+        }
+    }
+
+    private List<String> getAllOutgoingPaths(String splitOperatorId) {
+        List<String> outgoingPaths = new ArrayList<>();
+        for(String operatorId : topology.keySet()) {
+            Operator op = topology.get(operatorId);
+            for(Operator out : op.getSources()) {
+                if(out.getName().equals(splitOperatorId)) {
+                    outgoingPaths.add(op.getName());
+                }
+            }
+        }
+        return outgoingPaths;
     }
 
     private void initOperator() {

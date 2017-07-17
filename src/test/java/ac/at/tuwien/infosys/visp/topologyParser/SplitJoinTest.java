@@ -1,12 +1,15 @@
 package ac.at.tuwien.infosys.visp.topologyParser;
 
-import ac.at.tuwien.infosys.visp.common.operators.*;
+import ac.at.tuwien.infosys.visp.common.operators.Operator;
+import ac.at.tuwien.infosys.visp.common.operators.Split;
 import org.apache.log4j.Logger;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.util.*;
+
+import static junit.framework.TestCase.fail;
 
 public class SplitJoinTest {
 
@@ -87,6 +90,17 @@ public class SplitJoinTest {
             }
         }
         Assert.assertTrue("Not able to reach source from sink", false);
+    }
+
+    @Test
+    public void test_splitPathOrderIncomplete() {
+        try {
+            TopologyParser tp = new TopologyParser();
+            TopologyParser.ParseResult pr = tp.parseTopologyFromClasspath("split_join_pathOrderIncomplete.conf");
+            fail("Parser should throw exception because pathOrder does not contain $step2b");
+        } catch(RuntimeException rt) {
+
+        }
     }
 
 
