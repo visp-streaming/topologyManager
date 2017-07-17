@@ -44,8 +44,8 @@ OPERATOR : 'Operator' ;
 SINK : 'Sink' ;
 SPLIT : 'Split' ;
 JOIN : 'Join' ;
-STRING      :   '"' ('\\"'|.)*? '"' | (LETTER | [0-9])+ ;
-ID  :   '$' LETTER (LETTER | [0-9])* ;
+STRING      :   '"' ('\\"'|.)*? '"' | (LETTER | [0-9] | '_')+ ;
+ID  :   '$' LETTER (LETTER | [0-9] | '_')* ;
 RESOURCEPOOL : STRING | STAR;
 
 
