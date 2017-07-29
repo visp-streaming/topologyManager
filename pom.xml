@@ -10,7 +10,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>1.8</java.version>
         <antlr.version>4.7</antlr.version>
-        <visp.common.version>0.2</visp.common.version>
+        <visp.common.version>0.3</visp.common.version>
         <log4j.version>1.2.17</log4j.version>
         <apache.commons.lang.version>3.4</apache.commons.lang.version>
         <junit.version>4.12</junit.version>
@@ -24,6 +24,13 @@
         <url>https://github.com/visp-streaming/topologyParser</url>
         <tag>HEAD</tag>
     </scm>
+
+    <distributionManagement>
+        <repository>
+            <id>bintray</id>
+            <url>https://api.bintray.com/maven/chochreiner/visp/topologyParser/;publish=1</url>
+        </repository>
+    </distributionManagement>
 
     <dependencies>
         <dependency>
@@ -73,6 +80,17 @@
     </build>
 
     <repositories>
+        <repository>
+            <id>bintray</id>
+            <url>http://dl.bintray.com/chochreiner/visp</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+        <!-- TODO remove infosys repositories as soon as bintray proves to be reliable -->
         <repository>
             <id>infosys</id>
             <name>infosys-maven-releases</name>
