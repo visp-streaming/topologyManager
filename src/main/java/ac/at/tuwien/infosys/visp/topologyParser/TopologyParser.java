@@ -87,7 +87,7 @@ public class TopologyParser {
 
         File dotFile = File.createTempFile("graphviz", ".dot");
 
-
+        File fluxFile = File.createTempFile("topology", ".flux");
 
         // in this method, the generated parse tree is walked
         // here, the actual topology is created
@@ -99,6 +99,9 @@ public class TopologyParser {
         for (Operator o : topologyListener.getTopology().values()) {
             logger.debug(o.toString());
         }
+
+        topologyListener.writeFluxFile(fluxFile.getAbsolutePath());
+        logger.info("Wrote flux file to " + fluxFile);
 
         Map<String, Operator> topology = topologyListener.getTopology();
 
