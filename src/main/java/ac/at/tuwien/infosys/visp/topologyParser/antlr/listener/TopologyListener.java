@@ -17,6 +17,7 @@ import java.util.*;
 public class TopologyListener extends VispBaseListener {
     public VispParser parser;
     public List<String> linesToWriteToGraphViz;
+    public List<String> linesToWriteToFlux;
     private static final Logger LOG = Logger.getLogger(TopologyListener.class);
 
 
@@ -35,6 +36,7 @@ public class TopologyListener extends VispBaseListener {
         this.parser = parser;
         linesToWriteToGraphViz = new ArrayList<String>();
         linesToWriteToGraphViz.add("\ndigraph {\n");
+        linesToWriteToFlux = new ArrayList<String>();
     }
 
     public Map<String, Operator> getTopology() {
@@ -52,6 +54,67 @@ public class TopologyListener extends VispBaseListener {
             }
         }
 
+    }
+
+    public void writeFluxFile(String filename) throws IOException {
+        LOG.info("in writeFluxFile for filename " + filename);
+        linesToWriteToFlux.add("name: \"visp-topology\"\nconfig:\n\ttopology.workers: 1\n\n");
+
+
+        linesToWriteToFlux.add("# spout definitions\n");
+        linesToWriteToFlux.add("spouts:\n");
+        for (String operatorId : topology.keySet()) {
+            if (topology.get(operatorId) instanceof Source) {
+                printOperatorFlux(operatorId, linesToWriteToFlux);
+            }
+        }
+
+        linesToWriteToFlux.add("\n# bolt definitions\n");
+        linesToWriteToFlux.add("bolts:\n");
+        for (String operatorId : topology.keySet()) {
+            if (topology.get(operatorId) instanceof ProcessingOperator || topology.get(operatorId) instanceof Sink) {
+                printOperatorFlux(operatorId, linesToWriteToFlux);
+            }
+        }
+
+        linesToWriteToFlux.add("\n# stream definitions\n");
+        linesToWriteToFlux.add("streams:\n");
+        for (String operatorId : topology.keySet()) {
+            if (topology.get(operatorId) instanceof ProcessingOperator || topology.get(operatorId) instanceof Sink) {
+                printStreamFlux(operatorId, linesToWriteToFlux);
+            }
+        }
+
+
+
+        try (Writer writer = new BufferedWriter(new OutputStreamWriter(
+                new FileOutputStream(filename), "utf-8"))) {
+            for (String s : linesToWriteToFlux) {
+                writer.write(s);
+            }
+        }
+
+    }
+
+    private void printOperatorFlux(String operatorId, List<String> linesToWriteToFlux) {
+        linesToWriteToFlux.add("  - id: \"" + operatorId + "\"\n");
+        linesToWriteToFlux.add("    className: \"" + topology.get(operatorId).getType() + "\"\n");
+        linesToWriteToFlux.add("    parallelism: 1\n");
+    }
+
+    private void printStreamFlux(String operatorId, List<String> linesToWriteToFlux) {
+        Operator op = topology.get(operatorId);
+        for(Operator source : op.getSources()) {
+            if(source == null) {
+                LOG.warn("Source of operator " + op.getName() + " is null...");
+                continue;
+            }
+            linesToWriteToFlux.add("  - name: \"" + source.getName() + " --> " + op.getName() + "\"\n");
+            linesToWriteToFlux.add("    from: \"" + source.getName() + "\"\n");
+            linesToWriteToFlux.add("    to: \"" + op.getName() + "\"\n");
+            linesToWriteToFlux.add("    grouping:\n");
+            linesToWriteToFlux.add("      type: SHUFFLE\n"); // TODO
+        }
     }
 
     @Override
@@ -306,11 +369,20 @@ public class TopologyListener extends VispBaseListener {
 
         String sizeString = ctx.sizeType().getText();
         switch (sizeString) {
-            case "small": newOperator.setSize(Operator.Size.SMALL); break;
-            case "medium": newOperator.setSize(Operator.Size.MEDIUM); break;
-            case "large": newOperator.setSize(Operator.Size.LARGE); break;
-            case "unknown": newOperator.setSize(Operator.Size.UNKNOWN); break;
-            default: throw new RuntimeException("Unknown operator size: " + sizeString);
+            case "small":
+                newOperator.setSize(Operator.Size.SMALL);
+                break;
+            case "medium":
+                newOperator.setSize(Operator.Size.MEDIUM);
+                break;
+            case "large":
+                newOperator.setSize(Operator.Size.LARGE);
+                break;
+            case "unknown":
+                newOperator.setSize(Operator.Size.UNKNOWN);
+                break;
+            default:
+                throw new RuntimeException("Unknown operator size: " + sizeString);
         }
     }
 
@@ -448,15 +520,15 @@ public class TopologyListener extends VispBaseListener {
     }
 
     private void checkIfPathOrderContainsAllPaths() {
-        for(String operatorId : topology.keySet()) {
+        for (String operatorId : topology.keySet()) {
             Operator op = topology.get(operatorId);
-            if(! (op instanceof Split)) {
+            if (!(op instanceof Split)) {
                 continue;
             }
             List<String> pathOrder = ((Split) op).getPathOrder();
             List<String> allOutgoingPaths = getAllOutgoingPaths(operatorId);
-            for(String path : allOutgoingPaths) {
-                if(!pathOrder.contains(path)) {
+            for (String path : allOutgoingPaths) {
+                if (!pathOrder.contains(path)) {
                     throw new RuntimeException("Operator " + operatorId + "'s pathOrder does not contain path " + path);
                 }
             }
@@ -466,10 +538,10 @@ public class TopologyListener extends VispBaseListener {
 
     private List<String> getAllOutgoingPaths(String splitOperatorId) {
         List<String> outgoingPaths = new ArrayList<>();
-        for(String operatorId : topology.keySet()) {
+        for (String operatorId : topology.keySet()) {
             Operator op = topology.get(operatorId);
-            for(Operator out : op.getSources()) {
-                if(out.getName().equals(splitOperatorId)) {
+            for (Operator out : op.getSources()) {
+                if (out.getName().equals(splitOperatorId)) {
                     outgoingPaths.add(op.getName());
                 }
             }
