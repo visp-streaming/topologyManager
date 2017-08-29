@@ -109,12 +109,29 @@ public class TopologyListener extends VispBaseListener {
                 LOG.warn("Source of operator " + op.getName() + " is null...");
                 continue;
             }
-            linesToWriteToFlux.add("  - name: \"" + source.getName() + " --> " + op.getName() + "\"\n");
-            linesToWriteToFlux.add("    from: \"" + source.getName() + "\"\n");
-            linesToWriteToFlux.add("    to: \"" + op.getName() + "\"\n");
-            linesToWriteToFlux.add("    grouping:\n");
-            linesToWriteToFlux.add("      type: SHUFFLE\n"); // TODO
+            if(source instanceof Join) {
+                // skip Join and treat its sources as sources for current operator
+                for(Operator grandSource : source.getSources()) {
+                    helpPrintStreamFlux(grandSource, op, linesToWriteToFlux);
+                }
+            } else if(source instanceof Split) {
+                // skip Split and treat its sources as sources for current operator
+                for(Operator grandSource : source.getSources()) {
+                    helpPrintStreamFlux(grandSource, op, linesToWriteToFlux);
+                }
+            } else {
+                helpPrintStreamFlux(source, op, linesToWriteToFlux);
+            }
+
         }
+    }
+
+    private void helpPrintStreamFlux(Operator source, Operator op, List<String> linesToWriteToFlux) {
+        linesToWriteToFlux.add("  - name: \"" + source.getName() + " --> " + op.getName() + "\"\n");
+        linesToWriteToFlux.add("    from: \"" + source.getName() + "\"\n");
+        linesToWriteToFlux.add("    to: \"" + op.getName() + "\"\n");
+        linesToWriteToFlux.add("    grouping:\n");
+        linesToWriteToFlux.add("      type: SHUFFLE\n");
     }
 
     @Override
