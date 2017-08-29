@@ -131,7 +131,7 @@ public class TopologyListener extends VispBaseListener {
         linesToWriteToFlux.add("    from: \"" + source.getName() + "\"\n");
         linesToWriteToFlux.add("    to: \"" + op.getName() + "\"\n");
         linesToWriteToFlux.add("    grouping:\n");
-        linesToWriteToFlux.add("      type: SHUFFLE\n"); // TODO
+        linesToWriteToFlux.add("      type: SHUFFLE\n");
     }
 
     @Override
