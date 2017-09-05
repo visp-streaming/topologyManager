@@ -1,9 +1,6 @@
 package ac.at.tuwien.infosys.visp.topologyParser;
 
-import ac.at.tuwien.infosys.visp.common.operators.Operator;
-import ac.at.tuwien.infosys.visp.common.operators.ProcessingOperator;
-import ac.at.tuwien.infosys.visp.common.operators.Sink;
-import ac.at.tuwien.infosys.visp.common.operators.Source;
+import ac.at.tuwien.infosys.visp.common.operators.*;
 import ac.at.tuwien.infosys.visp.topologyParser.antlr.VispLexer;
 import ac.at.tuwien.infosys.visp.topologyParser.antlr.VispParser;
 import ac.at.tuwien.infosys.visp.topologyParser.antlr.listener.TopologyListener;
@@ -16,6 +13,7 @@ import org.apache.log4j.Logger;
 import java.io.*;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class TopologyParser {
     /**
@@ -55,7 +53,7 @@ public class TopologyParser {
             File temp = File.createTempFile("tempTopologyFile", ".txt");
             String fileName = temp.getAbsolutePath();
             File f = new File(fileName);
-            FileWriter fw = new FileWriter(f,false);
+            FileWriter fw = new FileWriter(f, false);
             fw.append(content);
             fw.flush();
             fw.close();
@@ -120,17 +118,24 @@ public class TopologyParser {
                 if (operator instanceof ProcessingOperator) {
                     bw.write("  allowedLocations = " + allowedLocationsToList(operator.getAllowedLocationsList()) + ",\n");
                 }
-                bw.write("  concreteLocation = " + operator.getConcreteLocation() + ",\n");
-                if (!(operator instanceof Source)) {
+                if (!(operator instanceof Split || operator instanceof Join)) {
+                    bw.write("  concreteLocation = " + operator.getConcreteLocation() + ",\n");
+                }
+                if (!(operator instanceof Source || operator instanceof Split || operator instanceof Join)) {
                     bw.write("  inputFormat = \"" + String.join(" ", operator.getInputFormat()) + "\",\n");
                 }
-                if (!(operator instanceof Sink)) {
+                if (!(operator instanceof Sink || operator instanceof Split || operator instanceof Join)) {
                     bw.write("  outputFormat = \"" + operator.getOutputFormat() + "\",\n");
                 }
-                bw.write("  type = \"" + operator.getType() + "\"");
+                if (!(operator instanceof Split || operator instanceof Join)) {
+                    bw.write("  type = \"" + operator.getType() + "\"");
+                }
+                if (operator instanceof Split) {
+                    bw.write("  pathOrder = " + String.join(" ", ((Split) operator).getPathOrder().stream().map(op -> ("$" + op)).collect(Collectors.toList())));
+                }
                 if (operator instanceof ProcessingOperator) {
                     bw.write(",\n    stateful = " + (operator.isStateful() ? "true" : "false") + ",\n");
-                    if(!operator.getSize().equals(Operator.Size.UNKNOWN)) {
+                    if (!operator.getSize().equals(Operator.Size.UNKNOWN)) {
                         bw.write("  size = " + operator.getSize().toString().toLowerCase() + ",\n");
                     }
                     bw.write("  expectedDuration = " + ((ProcessingOperator) operator).getExpectedDuration() + ",\n");
@@ -178,6 +183,10 @@ public class TopologyParser {
             return "Sink";
         } else if (operator instanceof ProcessingOperator) {
             return "Operator";
+        } else if (operator instanceof Split) {
+            return "Split";
+        } else if (operator instanceof Join) {
+            return "Join";
         } else
             throw new RuntimeException("Unknown operator type for operator " + operator);
     }
