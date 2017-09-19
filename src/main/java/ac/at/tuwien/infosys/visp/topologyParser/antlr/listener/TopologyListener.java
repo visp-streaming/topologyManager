@@ -86,7 +86,6 @@ public class TopologyListener extends VispBaseListener {
         }
 
 
-
         try (Writer writer = new BufferedWriter(new OutputStreamWriter(
                 new FileOutputStream(filename), "utf-8"))) {
             for (String s : linesToWriteToFlux) {
@@ -104,19 +103,19 @@ public class TopologyListener extends VispBaseListener {
 
     private void printStreamFlux(String operatorId, List<String> linesToWriteToFlux) {
         Operator op = topology.get(operatorId);
-        for(Operator source : op.getSources()) {
-            if(source == null) {
+        for (Operator source : op.getSources()) {
+            if (source == null) {
                 LOG.warn("Source of operator " + op.getName() + " is null...");
                 continue;
             }
-            if(source instanceof Join) {
+            if (source instanceof Join) {
                 // skip Join and treat its sources as sources for current operator
-                for(Operator grandSource : source.getSources()) {
+                for (Operator grandSource : source.getSources()) {
                     helpPrintStreamFlux(grandSource, op, linesToWriteToFlux);
                 }
-            } else if(source instanceof Split) {
+            } else if (source instanceof Split) {
                 // skip Split and treat its sources as sources for current operator
-                for(Operator grandSource : source.getSources()) {
+                for (Operator grandSource : source.getSources()) {
                     helpPrintStreamFlux(grandSource, op, linesToWriteToFlux);
                 }
             } else {
@@ -234,11 +233,30 @@ public class TopologyListener extends VispBaseListener {
             color = "springgreen";
         }
 
+        String firstLine = currentNodeName;
+        String secondLine = null;
+        String thirdLine = null;
+
+        if (newOperator.getConcreteLocation() != null) {
+            secondLine = newOperator.getConcreteLocation().toString();
+        }
+        if (newOperator.getSize() != null) {
+            thirdLine = "Size: " + newOperator.getSize().toString().toLowerCase();
+        }
+
         String toWrite = "\"" + currentNodeName + "\" [style=filled, fontname=\"helvetica\", shape=box, fillcolor=" + color +
-                ", label=<" + currentNodeName + "<BR />\n" +
-                "\t<FONT POINT-SIZE=\"10\">" + newOperator.getConcreteLocation() +
-                (newOperator.getSize() != null ? "<BR />\nSize: " + newOperator.getSize().toString().toLowerCase() : "") + "</FONT>>"
-                + "]";
+                ", label=<" + firstLine + "";
+        if (secondLine != null) {
+            toWrite += "\n\t<BR /><FONT POINT-SIZE=\"10\">" + secondLine;
+            if (thirdLine == null) {
+                toWrite += "</FONT>>";
+            } else {
+                toWrite += "<BR />\n" + thirdLine + "</FONT>>";
+            }
+        } else {
+            toWrite += ">";
+        }
+        toWrite += "]";
         this.linesToWriteToGraphViz.add("\t" + toWrite + "\n");
     }
 
