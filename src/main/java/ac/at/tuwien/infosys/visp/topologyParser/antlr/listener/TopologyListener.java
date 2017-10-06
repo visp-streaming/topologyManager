@@ -229,8 +229,11 @@ public class TopologyListener extends VispBaseListener {
             color = "beige";
         } else if (newOperator instanceof ProcessingOperator) {
             color = "skyblue";
-        } else {
+        } else if (newOperator instanceof Sink) {
             color = "springgreen";
+        } else {
+            // join/split
+            color = "deeppink";
         }
 
         String firstLine = currentNodeName;
