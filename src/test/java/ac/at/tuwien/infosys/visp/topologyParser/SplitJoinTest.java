@@ -9,6 +9,7 @@ import org.junit.Test;
 
 import java.util.*;
 
+import static junit.framework.TestCase.assertTrue;
 import static junit.framework.TestCase.fail;
 
 public class SplitJoinTest {
@@ -25,7 +26,7 @@ public class SplitJoinTest {
         TopologyParser.ParseResult topology = parser.parseTopologyFromClasspath("split_join.conf");
         logger.debug("This topology has been generated:");
 
-        for(Operator o : topology.topology.values()) {
+        for (Operator o : topology.topology.values()) {
             logger.debug(o.toString());
         }
 
@@ -50,8 +51,8 @@ public class SplitJoinTest {
 
     @Test
     public void test_pathOrder_returnsCorrectIdentifiers() {
-        Assert.assertEquals("step2a", ((Split)topology.get("split")).getPathOrder().get(0));
-        Assert.assertEquals("step2b", ((Split)topology.get("split")).getPathOrder().get(1));
+        Assert.assertEquals("step2a", ((Split) topology.get("split")).getPathOrder().get(0));
+        Assert.assertEquals("step2b", ((Split) topology.get("split")).getPathOrder().get(1));
     }
 
     @Test
@@ -62,7 +63,7 @@ public class SplitJoinTest {
     @Test
     public void test_joinHasCorrectSources() {
         List<String> sources = new ArrayList<>();
-        for(Operator s : topology.get("join").getSources()) {
+        for (Operator s : topology.get("join").getSources()) {
             sources.add(s.getName());
         }
 
@@ -77,14 +78,14 @@ public class SplitJoinTest {
         Queue<String> toVisit = new LinkedList<>();
         String currentNode = "log";
         toVisit.add(currentNode);
-        while(!toVisit.isEmpty()) {
+        while (!toVisit.isEmpty()) {
             currentNode = toVisit.remove();
-            if(currentNode.equals(sourceId)) {
+            if (currentNode.equals(sourceId)) {
                 Assert.assertTrue(true);
                 return;
             }
-            if(topology.get(currentNode).getSources().size() > 0) {
-                for(Operator o : topology.get(currentNode).getSources()) {
+            if (topology.get(currentNode).getSources().size() > 0) {
+                for (Operator o : topology.get(currentNode).getSources()) {
                     toVisit.add(o.getName());
                 }
             }
@@ -98,13 +99,32 @@ public class SplitJoinTest {
             TopologyParser tp = new TopologyParser();
             TopologyParser.ParseResult pr = tp.parseTopologyFromClasspath("split_join_pathOrderIncomplete.conf");
             fail("Parser should throw exception because pathOrder does not contain $step2b");
-        } catch(RuntimeException rt) {
+        } catch (RuntimeException rt) {
 
         }
     }
 
 
+    @Test
+    public void test_trueLazyDeployment_isTrue() {
+        TopologyParser tp = new TopologyParser();
+        TopologyParser.ParseResult pr = tp.parseTopologyFromClasspath("split_join_lazy_deployment_true.conf");
+        Assert.assertTrue(((Split) pr.topology.get("split")).isLazyDeployment());
+    }
 
+    @Test
+    public void test_falseLazyDeployment_isFalse() {
+        TopologyParser tp = new TopologyParser();
+        TopologyParser.ParseResult pr = tp.parseTopologyFromClasspath("split_join_lazy_deployment_false.conf");
+        Assert.assertFalse(((Split) pr.topology.get("split")).isLazyDeployment());
+    }
+
+    @Test
+    public void test_noLazyDeployment_defaultIsFalse() {
+        TopologyParser tp = new TopologyParser();
+        TopologyParser.ParseResult pr = tp.parseTopologyFromClasspath("split_join_lazy_deployment_default.conf");
+        Assert.assertFalse(((Split) pr.topology.get("split")).isLazyDeployment());
+    }
 
 
 }
