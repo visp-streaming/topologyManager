@@ -347,6 +347,16 @@ public class TopologyListener extends VispBaseListener {
     }
 
     @Override
+    public void enterLazyDeploymentStmt(VispParser.LazyDeploymentStmtContext ctx) {
+        if (newOperator instanceof Split) {
+            boolean lazyDeployment = ctx.BOOLEAN().getText().toLowerCase().equals("true");
+            ((Split) newOperator).setLazyDeployment(lazyDeployment);
+        } else {
+            LOG.warn("Ignoring lazyDeployment statement for operator " + currentNodeName + " (not applicable for operator type)");
+        }
+    }
+
+    @Override
     public void enterOutputFormatStmt(VispParser.OutputFormatStmtContext ctx) {
         if (newOperator instanceof Sink) {
             LOG.warn("output format statement has no effect for operator type Sink");
