@@ -8,7 +8,7 @@ sourceNode : ID ;
 nodeBody : | statement | statement (',' statement)* ','?;
 statement : allowedLocationsStmt | inputFormatStmt | mechanismStmt | typeStmt | outputFormatStmt |
   statefulStmt | concreteLocationStmt | sizeStmt | expectedDurationStmt | scalingCPUThresholdStmt |
-  scalingMemoryThresholdStmt | queueThreshold | replicationAllowedStmt | pinnedStmt | pathOrderStmt | compensationStmt;
+  scalingMemoryThresholdStmt | queueThreshold | replicationAllowedStmt | pinnedStmt | pathOrderStmt | lazyDeploymentStmt | compensationStmt; // todo: allow some statements only for specific subclasses
 allowedLocationsStmt : 'allowedLocations' '=' LOCATION*;
 concreteLocationStmt : 'concreteLocation' '=' LOCATION;
 inputFormatStmt : 'inputFormat' '=' STRING+ ;
@@ -26,6 +26,7 @@ queueThreshold : 'queueThreshold' '=' NUMBER ;
 replicationAllowedStmt : 'replicationAllowed' '=' BOOLEAN ;
 pinnedStmt : 'pinned' '=' BOOLEAN ;
 pathOrderStmt : 'pathOrder' '=' ID+;
+lazyDeploymentStmt : 'lazyDeployment' '=' BOOLEAN;
 compensationStmt : 'compensation' '=' STRING ;
 NUMBER : DOUBLE | INT ;
 LOCATION : IP_ADDRESS SLASH RESOURCEPOOL ;
