@@ -10,7 +10,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>1.8</java.version>
         <antlr.version>4.7</antlr.version>
-        <visp.common.version>0.5</visp.common.version>
+        <visp.common.version>0.7-SNAPSHOT</visp.common.version>
         <log4j.version>1.2.17</log4j.version>
         <apache.commons.lang.version>3.4</apache.commons.lang.version>
         <junit.version>4.12</junit.version>

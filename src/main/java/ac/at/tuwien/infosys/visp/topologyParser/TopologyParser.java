@@ -131,7 +131,8 @@ public class TopologyParser {
                     bw.write("  type = \"" + operator.getType() + "\"");
                 }
                 if (operator instanceof Split) {
-                    bw.write("  pathOrder = " + String.join(" ", ((Split) operator).getPathOrder().stream().map(op -> ("$" + op)).collect(Collectors.toList())));
+                    bw.write("  pathOrder = " + String.join(" ", ((Split) operator).getPathOrder().stream().map(op -> ("$" + op)).collect(Collectors.toList())) + ",\n");
+                    bw.write("  lazyDeployment = " + (((Split) operator).isLazyDeployment() ? "true" : "false"));
                 }
                 if (operator instanceof ProcessingOperator) {
                     bw.write(",\n    stateful = " + (operator.isStateful() ? "true" : "false") + ",\n");
