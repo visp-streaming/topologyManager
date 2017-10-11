@@ -162,6 +162,7 @@ public class TopologyListener extends VispBaseListener {
             if (!pathOrderIsSet) {
                 throw new RuntimeException("Path order not set for split operator " + currentNodeName);
             } else {
+                LOG.info("Produced the following Split node: " + newOperator.getName() + " with lazyDeployment=" + ((Split) newOperator).isLazyDeployment());
                 finishOperatorCreation();
                 return;
             }
@@ -242,6 +243,9 @@ public class TopologyListener extends VispBaseListener {
 
         if (newOperator.getConcreteLocation() != null) {
             secondLine = newOperator.getConcreteLocation().toString();
+        }
+        if (newOperator instanceof Split) {
+            secondLine = "LazyDeployment: " + (((Split) newOperator).isLazyDeployment() ? "yes" : "no");
         }
         if (newOperator.getSize() != null) {
             thirdLine = "Size: " + newOperator.getSize().toString().toLowerCase();
@@ -351,6 +355,7 @@ public class TopologyListener extends VispBaseListener {
         if (newOperator instanceof Split) {
             boolean lazyDeployment = ctx.BOOLEAN().getText().toLowerCase().equals("true");
             ((Split) newOperator).setLazyDeployment(lazyDeployment);
+            LOG.info("Setting lazyDeployment to " + lazyDeployment + " for operator " + currentNodeName);
         } else {
             LOG.warn("Ignoring lazyDeployment statement for operator " + currentNodeName + " (not applicable for operator type)");
         }
